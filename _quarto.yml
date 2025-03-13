@@ -1,0 +1,17 @@
+project:
+  title: Introduction to R Corrections Analysts
+
+profile:
+  group: 
+    - [html_lms, html_book, docx]
+
+format-links: false
+fig-cap-location: top
+
+execute: 
+  freeze: false
+
+knitr:
+  opts_chunk: 
+    dev: ragg_png
+    dpi: 300

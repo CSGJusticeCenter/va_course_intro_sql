@@ -1,0 +1,22 @@
+project:
+  type: default
+  output-dir: _site
+  lib-dir: libs
+
+format:
+  html: 
+    embed-resources: false
+    toc: true
+    toc-depth: 3
+    toc-title: On this page
+    theme:
+      - zephyr
+      - custom_theme.scss
+    mainfont: "Public Sans, sans-serif"
+    monofont: "monospace"
+    linkcolor: "#277CB4"
+    link-external-icon: true
+    link-external-newwindow: true
+    code-overflow: wrap
+    include-in-header: 
+      - file: google-font.html  

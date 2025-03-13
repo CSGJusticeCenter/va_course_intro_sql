@@ -1,0 +1,11 @@
+project:
+  output-dir: _docx
+  post-render: _rename_docx.R
+
+format:
+  docx: default
+
+knitr:
+  opts_chunk: 
+    dev: ragg_png
+    dpi: 300
