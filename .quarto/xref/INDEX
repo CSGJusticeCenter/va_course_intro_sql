@@ -1,5 +1,10 @@
 {
   "lesson01/lesson01.qmd": {
-    "lesson01.html": "db4673ca"
+    "lesson01.html": "db4673ca",
+    "lesson01.docx": "bc098e89"
+  },
+  "index.qmd": {
+    "index.html": "15aec69c",
+    "index.docx": "f4aeb22b"
   }
 }

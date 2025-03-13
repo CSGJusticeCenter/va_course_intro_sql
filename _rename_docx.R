@@ -4,7 +4,7 @@
 output_files <- as.vector(stringr::str_split(Sys.getenv("QUARTO_PROJECT_OUTPUT_FILES"), "\\\n", simplify = TRUE))
 
 # create new files names 
-verbose_file_names <- paste("Intro to R - Lesson", stringr::str_sub(output_files, -7, -6),"- text.docx")
+verbose_file_names <- paste("Intro to SQL - Lesson", stringr::str_sub(output_files, -7, -6),"- text.docx")
 
 # use file names in full paths
 renamed_docx_files <- stringr::str_replace(output_files, "lesson[0-9][0-9].docx", verbose_file_names)

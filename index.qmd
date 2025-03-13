@@ -1,0 +1,7 @@
+## About the Course
+
+This site contains information and materials about Introduction to SQL for Corrections Analysts, a course in the Advancing Data in Corrections: Virtual Academy program.
+
+visit XXXX to enroll in the course.
+
+Visit the [Virtual Academy site](https://csgjusticecenter.org/projects/virtual-academy-for-corrections-analysts/) for more infomration about the program.
