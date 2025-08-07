@@ -1,0 +1,32 @@
+---
+title: "Lesson 3: Aggregating Data"
+engine: knitr
+filters:
+  - interactive-sql
+databases:
+  - name: state_doc
+    path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
+---
+
+Lesson 3 demo
+
+```{.sql .interactive .state_doc}
+SELECT county_id, AVG(sentence_years) AS avg_sentence_years 
+ FROM intakes 
+ WHERE off_group = 'DRUG'
+ GROUP BY county_id 
+ HAVING AVG(sentence_years) > 3
+ ORDER BY avg_sentence_years DESC; 
+```
+
+```{.sql .interactive .state_doc}
+SELECT first_name, 
+       last_name,
+       -- birth_country (-- Temporarily disables this field selection)
+FROM residents
+WHERE birth_country = 'Mexico'
+AND age_at_first_arrest < 18
+```
+
+
+

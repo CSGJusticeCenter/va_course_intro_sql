@@ -1,0 +1,46 @@
+---
+title: "Lesson 4: Working with Multiple Tables"
+engine: knitr
+filters:
+  - interactive-sql
+databases:
+  - name: state_doc
+    path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
+---
+
+Lesson 4 demo
+
+Suppose your supervisor asks for a list of residents who are male, over the age of 25, and have a known education level. They also want the list sorted alphabetically by last name so it’s easier to review. Let’s write a query to generate that list using the WHERE clause, a logical operator, IS NOT NULL, and ORDER BY.
+
+```{.sql .interactive .state_doc}
+SELECT r.first_name,  
+       r.last_name,  
+       i.admission_date 
+ FROM residents AS r 
+ INNER JOIN intakes AS i 
+       ON r.resident_id = i.resident_id; 
+```
+
+```{.sql .interactive .state_doc}
+SELECT i.resident_id,  
+       i.admission_date,  
+       i.off_group, 
+       r.sex,  
+       r.birth_country  
+FROM intakes AS i 
+ LEFT JOIN residents AS r 
+   ON i.resident_id = r.resident_id;  
+```
+
+Demo 2: 
+```{.sql .interactive .state_doc}
+SELECT r.first_name, 
+       r.last_name, 
+       i.admission_date, 
+       f.facil_name
+FROM residents AS r
+INNER JOIN intakes AS i 
+  ON r.resident_id = i.resident_id
+INNER JOIN facilities AS f 
+  ON i.facil_id = f.facil_id;
+```

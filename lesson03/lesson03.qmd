@@ -1,0 +1,328 @@
+---
+title: "Lesson 3: Aggregating Data"
+engine: knitr
+filters:
+  - interactive-sql
+databases:
+  - name: state_doc
+    path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
+---
+
+## Introduction
+
+Now that you’ve learned how to filter and sort records using `WHERE` and `ORDER BY`, it’s time to go a level deeper by learning how to **summarize and group data**. As a corrections analyst, you’ll often be asked to answer high-level questions that go beyond individual records—like how many residents were admitted last month, how many are currently housed in each facility, or what the average sentence length is by intake type. To answer these types of questions, you’ll need to understand how to use **aggregate functions** and **grouping** in SQL.
+
+Aggregate functions allow you to summarize values across multiple rows, and grouping helps you organize data into meaningful categories—such as by facility, intake date, or sentencing county.
+
+This lesson covers the following:
+
+- Using `AS` to create column **aliases** that make your query results easier to read
+
+- Using aggregate functions like `COUNT()`, `SUM()`, `AVG()`, `MIN()`, and `MAX()` to generate summary statistics
+
+- Using `GROUP BY` to group records and apply aggregates by category
+
+- Filtering grouped data with `HAVING` to narrow your analysis
+
+- Combining aggregation with filtering and sorting
+
+
+These techniques are essential for building dashboards, generating monthly reports, and presenting digestible metrics to supervisors or stakeholders.
+
+
+## Using `AS` to create aliases
+
+Before we dive into aggregating data, let’s cover a small but important tool that makes your queries easier to read: the `AS` keyword.
+
+In SQL, you can use the `AS` keyword to create **aliases**, or temporary names, for columns and even entire tables. Aliases make your query results more readable—especially when you're working with calculated values or columns with unclear names.
+
+For example, if you write a query that calculates the average sentence length, the default column label will appear as something like `avg(sentence_years)`, which may not be very user friendly. By using `AS`, you can rename that output column to something more meaningful, like `average_sentence_years`.
+
+Here’s a basic example:
+
+```{.sql .interactive .state_doc}
+SELECT AVG(sentence_years) AS average_sentence_years
+FROM intakes;
+```
+
+![](images/avg_sen_years.png)
+
+Now, instead of seeing a default column name like `avg(sentence_years)`, the result will display a column called `average_sentence_years`, which is much clearer and easier to understand in a report or dashboard.
+
+
+Aliases are especially helpful under the following circumstances:
+
+- Formatting outputs for export or presentation where you want the output column to have a meaningful label
+
+- Preparing a report that will be shared with non-technical stakeholders
+
+- Preparing data for visualizations in tools like Tableau or Power BI
+
+- Writing queries with calculated fields or nested functions
+
+You can also use `AS` with table names in more complex queries (e.g., when working with joins), which we’ll cover in a later lesson.
+
+
+## Aggregate functions
+
+Aggregate functions are powerful tools that allow you to perform calculations across multiple rows of data and return a single, summarized value. These functions are essential when you want to answer questions about totals, averages, counts, minimums, maximums, and more.
+
+In corrections work, aggregate functions help analysts transform raw data into insights that inform system improvements, monitor trends, and evaluate system performance. Instead of analyzing each individual case or resident, you can look at group-level patterns and generate summary statistics that tell a broader story.
+
+**Common aggregate functions:**
+
+- `COUNT()`: Counts the number of rows that match a condition
+
+- `SUM()`: Adds together all values in a given column
+
+- `AVG()`: Calculates the average value
+
+- `MIN()`: Finds the smallest value
+
+- `MAX()`: Finds the largest value
+
+Each of these functions helps answer critical questions. For example:
+
+- `COUNT()` can tell you how many residents are admitted at any given time.
+
+- `AVG()` can help determine the average sentence length or age at first arrest.
+
+- `MAX()` might help identify the most recent release-ready date.
+
+- `MIN()` could show the earliest date of admission still pending processing.
+
+- `SUM()` can total up sentence years by county or facility to assess case distribution.
+
+::: {.callout-tip}
+## Data Quality Assurance
+
+While aggregate functions like COUNT() can quickly tell you how many records meet certain criteria, keep in mind that these numbers are only as accurate as the underlying data. In real-world corrections datasets, you might encounter issues like records that haven’t been updated to reflect escapes, releases, or data entry errors. Always consider whether there are factors that could impact the quality or completeness of the data before drawing conclusions.
+
+Want to learn more about spotting and addressing data issues? Check out our Data Quality course for practical strategies and real-world examples. 
+:::
+
+Let’s walk through a few examples that simulate the kinds of questions corrections analysts might encounter in their day-to-day work.
+
+### Counting residents
+
+Imagine your supervisor asks for a report with the total number of residents currently in the system. You can use the `COUNT()` function as follows:
+
+```{.sql .interactive .state_doc}
+SELECT COUNT(resident_id) AS total_residents 
+FROM residents;
+```
+
+**What this query does:**
+
+This query counts every row in the `residents` table and gives the result an alias (`total_residents`) using the `AS` keyword. It’s a quick way to assess the size of the population you're working with.
+
+![](images/total_res.png)
+
+### Calculating average sentence length
+
+Now suppose your supervisor is reviewing sentencing trends and wants to know the average sentence length (in years) for residents in your system. You could use:
+
+```{.sql .interactive .state_doc}
+SELECT  AVG(sentence_years) AS avg_sentence_length
+FROM intakes;
+```
+
+**What this query does:**
+
+This query calculates the average number of sentence years across all intake records.
+
+![](images/avg_sen_length.png)
+
+These types of calculations are not only useful for internal reporting, but they also support external transparency, performance measurement, and strategic decision-making.
+
+
+## Using `GROUP BY` to organize data
+
+While aggregate functions are useful for summarizing entire datasets, they become even more powerful when used with the `GROUP BY` clause. `GROUP BY` allows you to group rows that share the same value in one or more columns and then apply aggregate functions to each group.
+
+In corrections data, this is especially useful when you want to analyze trends or metrics across specific categories, such as facilities, counties, offense groups, or intake years. Instead of looking at totals or averages across the entire dataset, you can break the data down into meaningful segments.
+
+For example, you might want to do the following:
+
+- Count the number of residents per facility to monitor population levels.
+
+- Calculate the average sentence length for residents admitted from each county.
+
+- Find the number of intakes per month to observe seasonal patterns in admissions.
+
+These types of grouped summaries help corrections analysts identify resource needs, flag irregularities, and better understand the variation across locations or time periods.
+
+The `GROUP BY` clause is written **after** the `WHERE` clause and **before** the `ORDER BY` clause, if used. When using `GROUP BY`, each column in your `SELECT` statement must either be an aggregate function or be included in the `GROUP BY` clause.
+
+Let's put it into practice!
+
+### Counting residents by facility
+
+You’ve been asked to generate a snapshot of how many residents are currently housed at each facility to help administrators track population levels across the system. The following can be used to query the resident count per facility:
+
+```{.sql .interactive .state_doc}
+SELECT facil_id, COUNT(*) AS total_residents
+FROM intakes
+GROUP BY facil_id;
+```
+
+**What this query does:**
+
+This query groups all intake records by `facil_id` and counts how many records (residents) are in each group. The result shows the total number of residents per facility.
+
+![](images/facil_total_res.png)
+
+*In a corrections setting, this could help identify overcrowded facilities or support planning for transfers and resource allocation.*
+
+
+### Average sentence length by county
+
+Your department is reviewing sentencing trends by region, and you’ve been asked to report the average sentence length of residents admitted from each county. Use this query to find the average sentence lengths by county:
+
+```{.sql .interactive .state_doc}
+SELECT county_id, AVG(sentence_years) AS avg_sentence_years
+FROM intakes
+GROUP BY county_id;
+```
+
+**What this query does:**
+
+This query groups intake records by county_id and calculates the average number of sentence years for each group.
+
+![](images/county_avg_sen.png)
+
+*This kind of insight could help analysts detect sentencing disparities across counties or monitor the effectiveness of recent system improvements.*
+
+These examples show just a few ways that grouping data enhances analytical insights. By breaking down large tables into meaningful subgroups, corrections analysts can go beyond individual-level records and begin to see patterns, trends, and opportunities for improvement in the system.
+
+## Filtering grouped with `HAVING`
+
+Once you've grouped your data using `GROUP BY`, you might want to filter the grouped results. That’s where the `HAVING` clause comes in. While the `WHERE` clause filters rows **before** grouping, `HAVING` filters **after** the data has been grouped. This distinction is important—`WHERE` limits which rows are included in the groups, and `HAVING` limits which **groups** appear in the results.
+
+**Why this matters in corrections**
+
+As a corrections analyst, you’ll often need to report on summary data—but not every group is always relevant. For instance, you might want to know which facilities have more than 100 residents or which counties have an average sentence length above a certain threshold. `HAVING` helps you narrow your focus to those specific groups that meet criteria **after** aggregation.
+
+Let’s look at a few realistic scenarios to get some hands-on practice using `HAVING` in corrections-focused queries.
+
+### Finding facilities with more than 100 residents
+
+Department leadership is reviewing capacity across all facilities and wants you to identify only those facilities that house more than 100 residents. You would first group the data by facility and then filter those results using `HAVING`:
+
+```{.sql .interactive .state_doc}
+SELECT facil_id, COUNT(*) AS total_residents
+FROM intakes
+GROUP BY facil_id
+HAVING COUNT(*) > 100;
+```
+
+**What this query does:**
+
+This query returns only those facilities where the resident count exceeds 100.
+
+![](images/facil_100_plus.png)
+
+*This kind of query could help prioritize where to focus efforts for population management or support resource allocation in overcrowded facilities.*
+
+
+### Counties with high average sentences
+
+Suppose your supervisor asks for a list of counties where the average sentence length is over 10 years. You could use the following query:
+
+```{.sql .interactive .state_doc}
+SELECT county_id, AVG(sentence_years) AS avg_sentence_years
+FROM intakes
+GROUP BY county_id
+HAVING AVG(sentence_years) > 10;
+```
+
+**What this query does:**
+
+This filters the grouped county data to show only those counties with an average sentence exceeding 10 years.
+
+![](images/high_avg_sen.png)
+
+*This is useful for system reviews or identifying jurisdictions where sentencing practices may need further investigation.*
+
+The `HAVING` clause gives you precision when working with aggregated data, allowing you to answer complex questions and produce focused, actionable insights.
+
+
+## Combining aggregation with filtering
+
+In real-world data analysis, it's common to combine aggregation functions with filtering criteria to narrow your focus before calculating summary statistics. This helps ensure your results are relevant to a specific timeframe, subgroup, or operational question.
+
+For example, suppose you want to evaluate average sentence lengths, but only for residents admitted after a particular date. You can use a `WHERE` clause to apply the filter before grouping the data and calculating the average.
+Let's look at a practical example.
+
+### Average sentence for recent admissions
+
+Decision-makers would like to review sentencing trends starting in 2022. You're asked to compile a report of the average sentence length for residents admitted on or after January 1, 2022, by county:
+
+```{.sql .interactive .state_doc}
+SELECT county_id, AVG(sentence_years) AS avg_sentence
+FROM intakes
+WHERE admission_date >= '2022-01-01'
+GROUP BY county_id;
+```
+
+**What this query does:**
+
+This query filters the `intakes` table to include only residents admitted after January 1, 2022. It then groups the data by `county_id` and calculates the average number of sentence years for each county.
+
+![](images/recent_admins.png)
+
+*This type of query is valuable for identifying trends in sentencing across different counties over a recent timeframe.*
+
+## Sorting aggregated results
+
+Once you've grouped and summarized your data, you may want to sort the results to make them easier to interpret. This is where the ORDER BY clause comes in; it helps you rank or organize your aggregated data based on the values returned by functions like `COUNT()`, `AVG()`, or `SUM()`.
+
+Sorting aggregated results allows you to identify patterns or outliers more quickly. For example, you might want to know which counties have the highest number of intakes, or which facilities have the longest average sentence length.
+
+
+### Intake count by county
+
+You are tasked with analyzing the number of intakes by county for the past month. Leadership wants to know which counties have the highest number of residents entering the system so they can allocate additional resources where needed. You can sort the results as follows to identify which counties have the most intakes:
+
+```{.sql .interactive .state_doc}
+SELECT county_id, COUNT(*) AS intake_count
+FROM intakes
+GROUP BY county_id
+ORDER BY intake_count DESC;
+```
+
+**What this query does:**
+
+This query groups the data by county_id and counts how many intake records exist for each one. It then sorts the results in descending order, so the counties with the highest number of intakes appear first.
+
+![](images/intake_by_county.png)
+
+*By sorting this way, corrections analysts can quickly see which counties are sending the most people into the system. This information can guide decisions about staffing, resource allocation, or the need for further investigation into high-volume regions. It may also help inform collaboration or support efforts with local jurisdictions.*
+
+## Key takeaways
+
+- Adding **aliases** with `AS` makes your results cleaner and easier to read, especially when displaying calculations or summaries in dashboards or reports.
+
+- **Aggregate functions** allow you to summarize data across multiple rows. These are useful for generating high-level insights from large datasets, such as tracking total intakes or calculating average sentence lengths.
+
+- The `GROUP BY` clause is used when you want to perform aggregation for each unique value in a column—like getting a count of residents per facility or average sentence per county.
+
+- When using `GROUP BY`, each column in your `SELECT` statement must either be an aggregate function or be included in the `GROUP BY` clause.
+
+- **Filtering grouped data** with `HAVING` allows you to refine your results **after** the aggregation step. This is different from the `WHERE` clause, which filters rows **before** aggregation.
+
+- You can use `ORDER BY` with aggregated data to sort your results—either alphabetically, numerically, or chronologically.
+
+
+By knowing how to group, aggregate, and organize your results, you can extract meaningful trends from corrections data. These skills are essential for analysts who need to monitor population levels; identify outliers; or report on patterns across facilities, counties, or time periods.
+
+--------------------------------------------------------------------
+
+In this lesson, you learned how to summarize and group data using SQL aggregate functions and the `GROUP BY` clause—essential skills for generating high-level insights from large corrections datasets. In the next lesson, you’ll build on these concepts by learning how to join multiple tables, allowing you to pull in additional context and create more comprehensive queries across your database.
+
+
+## Additional resources
+
+- W3Schools.com (Website with more in-depth SQL learning and practice)
+- MySQL Cookbook, Fourth Edition
+

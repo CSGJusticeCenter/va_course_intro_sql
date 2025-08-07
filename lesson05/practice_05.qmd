@@ -1,0 +1,166 @@
+---
+title: "Lesson 5: Applying SQL to Corrections Data"
+engine: knitr
+filters:
+  - interactive-sql
+databases:
+  - name: state_doc
+    path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
+---
+
+
+## Learning Check
+
+1. The `ROUND()` function in SQL is used to improve query performance. *(TRUE/FALSE)* 
+
+
+    ***Correct Answer: False*** `ROUND()` is used to format numeric results by limiting decimal places—it does not impact the performance of the query.
+
+
+
+2. Which of the following SQL expressions correctly calculates the number of days between a resident's admission date and expected release date?
+
+    a. DATEDIFF(admission_date, exp_release_date)
+    b. JULIANDAY(exp_release_date) - JULIANDAY(admission_date)
+    c. DATEDIFF(DAY, exp_release_date, admission_date)
+    d. exp_release_date - admission_date
+
+    ***Correct Answer: B***
+
+
+3. Which of the following are best practices for writing SQL queries?
+
+    a. Always use SELECT * to ensure you get all the data
+    b. Use comments to explain complex logic
+    c. Write queries with formatting that aligns columns
+    d. Use meaningful table and column aliases
+    
+    ***Correct Answer: B, C, D***
+
+
+
+
+
+## Exercise
+
+![](images/corrections_erd.png)
+
+1. The case of the lost intake report
+
+The Data and Research Unit was preparing a quarterly intake report for department leadership. The SQL query had been carefully written, tested, and saved along with well-organized summary notes describing each part of the query. Unfortunately, during a system migration, the SQL code was lost.
+
+Thankfully, the summary notes were stored in a separate documentation system and remain intact. With a deadline fast approaching, a team member has been assigned to reconstruct the original query using only these summary notes.
+
+Your task is to write the SQL query based on the recovered documentation below. Once completed, the output will help identify how many individuals were admitted in the last 6 months, grouped by facility and intake month. You can refer to the ERD above to review table structure and column names.
+
+```{.sql .interactive .state_doc}
+/*
+This query calculates the number of individuals admitted to each facility in the last 6 months.
+
+COUNT is used to total the number of admission_date entries.
+
+The results are grouped by facility and the exact admission date.
+
+The facilities table provides the facility name (facil_name), which should be labeled as Facility.
+
+The intakes table contains the admission data. It is joined with the facilities table using facil_id.
+
+The query only includes records where the admission_date is within the past 183 days (6 months) from the current date, using the JULIANDAY() function.
+*/
+
+```
+
+Write your SQL query below:
+
+```{.sql .interactive .state_doc}
+
+```
+
+<details>
+<summary>Show the answer</summary>
+
+```{.sql .interactive .state_doc}
+SELECT 
+    i.admission_date,
+    f.facil_name AS Facility,
+    COUNT(i.admission_date) AS TotalAdmissions
+FROM 
+    intakes AS i
+LEFT JOIN 
+    facilities f ON i.facil_id = f.facil_id
+WHERE 
+    julianday('now') - julianday(i.admission_date) <= 183
+GROUP BY 
+    i.admission_date,
+    f.facil_name;
+```
+
+
+##
+
+2. The Debugging Dilemma
+
+A team member was tasked with writing a query for the “Admissions by County” report, which shows the number of individuals admitted over the past year, grouped by county name. They attempted to write the code but keep running into an error when they try to execute it.
+
+After multiple failed attempts to fix it themselves, they’ve asked you to review the code for quality assurance. Your job is to identify and correct any errors so the query runs properly and returns the expected results. You can refer to the ERD above to reviewtable structure and column names.
+
+***Goals of the query:***
+
+- Count how many people were admitted over the last 365 days.
+- Group the results by county name.
+- Use the intakes and counties tables.
+- Match `county_id` from the intakes table with `county_id` from the counties table.
+- Use `JULIANDAY()` to filter for admissions within the last 365 days.
+- Alias the result of the count as `TotalAdmissions` and county name as `County`.
+
+***Instructions:***
+
+1. Review the query and identify any errors (syntax, logic, or incorrect references).
+
+2. Correct the code so it executes successfully and returns accurate results.
+
+3. Write a short note explaining what was wrong and how you fixed it.
+
+```{.sql .interactive .state_doc}
+SELECT 
+    COUNT(admission_date) AS TotalAdmissions,
+    c.county_name AS County
+FROM 
+    intakes AS i
+JOIN 
+    counties AS c ON i.county_id = counties.county_id
+WHERE 
+    admission_date >= julianday('now') - 365
+GROUP BY 
+    County;
+```
+
+
+<details>
+<summary>Show the answer</summary>
+
+```{.sql .interactive .state_doc}
+/*
+Corrections:
+Corrected the JOIN condition to reference the alias c instead of repeating the table name counties.
+
+Fixed the date filter by using julianday()` on both sides to ensure proper date math.
+
+Used the full column reference i.admission_date in COUNT() for clarity and consistency.
+*/
+
+SELECT 
+    COUNT(i.admission_date) AS TotalAdmissions,
+    c.county_name AS County
+FROM 
+    intakes AS i
+JOIN 
+    counties AS c ON i.county_id = c.county_id
+WHERE 
+    julianday('now') - julianday(i.admission_date) <= 365
+GROUP BY 
+    County;
+```
+
+
+

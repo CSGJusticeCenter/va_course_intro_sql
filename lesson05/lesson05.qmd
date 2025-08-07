@@ -1,0 +1,352 @@
+---
+title: "Lesson 5: Applying SQL to Corrections Data"
+engine: knitr
+filters:
+  - interactive-sql
+databases:
+  - name: state_doc
+    path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
+---
+
+## Introduction
+
+In previous lessons, you learned how to write basic SQL queries and use filtering, grouping, and joins to analyze your corrections data. In this final lesson, you’ll build on those skills by learning how to use SQL to answer real-world corrections questions. You’ll explore how to perform calculations directly in your queries; work with date expressions; apply built-in SQL functions; and follow best practices for clean, readable code.
+
+These skills help corrections analysts calculate sentence lengths, monitor release readiness, identify trends in admissions or discharges, and perform quality control on key data points.
+
+By the end of this lesson, you’ll be able to do the following:
+
+- Use arithmetic in SQL queries.
+
+- Work with date expressions using SQLite’s `JULIANDAY()` function.
+
+- Use built-in SQL functions like `ROUND()` and `UPPER()`.
+
+- Format and comment your SQL queries.
+
+- Answer practical corrections questions using your SQL skills.
+
+
+
+## Using arithmetic in SQL
+
+Arithmetic operations are helpful when you need to calculate totals or differences from multiple numeric columns. In corrections data, this often means calculating the total length of a sentence, estimating release windows, or comparing numeric metrics like beds available vs. residents housed.
+
+
+Basic Arithmetic Operators:
+
+- `+` addition
+
+- `-` subtraction
+
+- `*` multiplication
+
+- `/` division
+
+### Estimate total sentence length in months
+
+Let’s say you’re building a dashboard metric for sentence length trends. Your data includes sentence years and months in separate columns, but you want the results in a single column. You can query a report to total the `sentence_years` and `sentence_months` together.
+
+
+```{.sql .interactive .state_doc}
+SELECT resident_id,
+       sentence_years * 12 + sentence_months AS total_sentence_months
+FROM intakes;
+```
+
+**What this query does:**
+
+- Converts `sentence_years` into months by multiplying by 12 then adds `sentence_months` for a full sentence length in months.
+
+-	Puts the result of this calculation in a new field, `total_sentence_months`, assigning it a clear and intuitive name so it’s readable in your output.
+
+This kind of calculation helps analysts report average sentence lengths consistently, even when year/month data is stored separately.
+
+## Using built-in functions 
+
+Built-in functions are predefined tools in SQL that help you transform and clean your data. They make queries more flexible and readable, and they let you format outputs for reports and dashboards.
+
+These functions are particularly useful when doing the following:
+
+- Cleaning or standardizing raw data
+
+- Summarizing or rounding data (e.g., sentence averages)
+
+- Standardizing formatting (e.g., make county names uppercase)
+
+- Performing real-time calculations (e.g., using the current date)
+
+- Preparing reports or dashboards for external stakeholders
+
+Here are  some useful built-in functions you can use in SQLite:
+
+- `ROUND()`: Rounds numeric values to a given decimal place
+  
+- `UPPER()`:	Converts text to uppercase
+
+- `JULIANDAY()`: 	Returns the number of days since January 1, 4173  BC
+
+### Standardized reporting
+
+Let’s say you need to prepare a list of residents whose last names must be standardized for reporting and round their sentence lengths to the nearest whole number of years. The following query can be used:
+
+```{.sql .interactive .state_doc}
+SELECT i.resident_id,
+       UPPER(r.last_name) AS standardized_last_name,
+       ROUND(i.sentence_years, 0) AS rounded_sentence_years,
+       JULIANDAY(exp_release_date) - JULIANDAY(sentence_date) AS Sent_To_Exp_Release
+FROM intakes AS i
+JOIN residents AS r ON i.resident_id = r.resident_id;
+```
+
+**What this query does:**
+
+- Converts each resident's last name to all uppercase for consistency.
+
+- Rounds their sentence to the nearest whole year.
+
+- `JULIANDAY()` converts both dates into numeric values, calculates the difference, returning the number of days between when a resident was sentenced and is expected to be released.
+
+- Pulls this info from both the intakes and residents tables using a join.
+
+
+![](images/standardized_reporting.png)
+
+## Working with date expressions
+
+Many important corrections metrics depend on understanding the time between two events—like time from admission to release, or sentence date to release readiness. To calculate those time intervals, SQL provides helpful date functions.
+
+SQL offers a variety of date and time functions to manipulate and extract values like day, month, year, or the number of days between two events. While the specific syntax may vary between different versions of SQL (e.g., SQLite, MySQL, SQL Server), the core functionality remains consistent.
+
+Because this course uses SQLite, we’ll rely on the `JULIANDAY()` function for date calculations. In other SQL environments (like SQL Server or PostgreSQL), the exact function name might differ, but the logic stays largely the same.
+
+For example, a function like `DATEDIFF()` is commonly used in other SQL engines to calculate the difference between two dates:
+
+```{.sql .interactive .state_doc}
+DATEDIFF(day, start_date, end_date)
+```
+
+
+**Calculating days between dates with `JULIANDAY()`**
+
+SQLite doesn’t have a built-in `DATEDIFF()` function. Instead, you would calculate the difference between two dates using `JULIANDAY()` like this:
+
+```{.sql .interactive .state_doc}
+JULIANDAY(end_date) - JULIANDAY(start_date)
+```
+
+Let's put it into practice.
+
+
+### Calculate days in custody
+
+Suppose you want to calculate how long each resident has been in custody. This query can be used to calculate the day difference from their admission date to today:
+
+```{.sql .interactive .state_doc}
+SELECT resident_id,
+       admission_date,
+       JULIANDAY('now') - JULIANDAY(admission_date) AS days_incarcerated
+FROM intakes;
+```
+
+**What this query does:**
+
+- 'now' is SQLite’s shortcut for the current date and time.
+
+- `JULIANDAY()` converts both dates into numeric values.
+
+- Subtracting them gives you the number of days each person has been in custody.
+
+![](images/custody_days.png)
+
+
+### Time between sentence date and admission date
+
+Quarterly audits are due and you've been tasked with generating a report to audit the number of days it takes a person to be admitted into custody after being sentenced. You can use the following query:
+
+```{.sql .interactive .state_doc}
+SELECT resident_id,
+       sentence_date,
+       admission_date,
+       JULIANDAY(admission_date) - JULIANDAY(sentence_date) AS days_to_admit
+FROM intakes;
+```
+
+**What this query does:**
+
+- `JULIANDAY()` converts `admission_date` and `sentence_date` into numeric values.
+
+- Calculates the difference in days, giving you the number of days from sentencing to admission for each resident.
+
+-	The result of the calculation is put in a new field called `days_to_admit`.
+
+![](images/days_to_admit.png)
+
+## Formatting and commenting your queries
+
+Readable queries are maintainable queries—especially when working in teams or across departments! Here are some tips to keep your queries clean and professional:
+
+### Formatting tips:
+
+- Use **indentation** and **line breaks**.
+  
+  - Place each `SELECT` field on its own line.
+
+  - Put `JOIN` and `WHERE` clauses on new lines.
+
+- Use **consistent spacing** for readability.
+
+- Use **descriptive aliases** for your tables (with longer names) to make joins easier to follow.
+
+### Commenting tips:
+
+Comments are helpful for leaving notes or explanations for both you and your team. You can explain why a query exists, explain what each part is doing, or temporarily disable parts of a query.
+
+- Use  `--`  for single-line comments:
+
+```{.sql .interactive .state_doc}
+-- This query retrieves the result for residents with sentences longer than 5 years
+
+SELECT resident_id
+FROM intakes
+WHERE sentence_years > 5;
+```
+
+- Use /* */ for multi-line comments:
+
+```{.sql .interactive .state_doc}
+/* This query calculates the total sentence length in months
+   by converting years to months and adding remaining months */
+   
+SELECT resident_id,
+       sentence_years * 12 + sentence_months AS total_sentence_months
+FROM intakes;
+```
+
+
+When you're writing or testing SQL queries, you may want to temporarily turn off or “disable” part of the query without deleting it. This is useful if you're troubleshooting, testing, or building your query step by step. You can do this using either of the commenting commands:
+
+```{.sql .interactive .state_doc}
+SELECT first_name, 
+       last_name,
+       -- birth_country (-- Temporarily disables this field selction)
+FROM residents
+/* 
+WHERE birth_country = 'Mexico'
+AND age_at_first_arrest < 18
+(This filter has been temporarily disabled)
+*/
+```
+
+These techniques help you experiment with your queries or debug issues without losing your work. Once you're ready to use that part of the query again, just remove the comment symbols.
+
+
+::: {.callout-tip}
+## **Naming table aliases**
+
+When you alias tables, aim for clarity. Descriptive aliases (like `res` for residents or `intk` for intakes) help everyone understand your query at a glance—especially when sharing with colleagues who might not know your database schema.
+
+That said, you’ll often encounter production queries that use very short aliases (sometimes a single letter, like r, i, or f) to save typing and reduce screen clutter. In those cases, make sure you—and anyone reading your code—know what each alias stands for. A simple comment at the top can help:
+
+```{.sql .interactive .state_doc}
+-- r = residents, i = intakes, f = facilities
+
+SELECT r.resident_id, 
+       i.admission_date, 
+       f.facil_name
+FROM residents AS r
+JOIN intakes AS i  
+  ON r.resident_id = i.resident_id
+JOIN facilities AS f ON i.facil_id    = f.facil_id;
+```
+Balance readability with brevity: choose meaningful aliases when possible, but don’t be surprised to see, and use, short ones in mature codebases.
+:::
+
+## Query writing best practices
+
+As you wrap up your learning, keep these best practices in mind:
+
+- **Avoid using `SELECT *` ** in production queries; always specify needed columns. This improves performance, reduces memory usage, and makes your queries easier to understand and maintain. When your query only includes necessary fields, you also **reduce the risk of exposing sensitive or unnecessary data**.
+
+- Use **descriptive aliases** for clarity, making your output easier to interpret, especially when working with aggregate or derived values.
+
+- **Test queries with small filters** before applying them broadly.
+
+- **Comment complex logic** for future reference. Comments are particularly useful when your query will be reused or reviewed by others.
+
+- Use consistent indentation and line breaks: This improves readability and helps others (and your future self!) understand your logic at a glance.
+
+- Use functions like `ROUND()` to **clean up results before sharing**.
+
+Clean, readable queries are easier to debug, maintain, and reuse—especially when collaborating across teams or building dashboards.
+
+## Answering real-world corrections questions
+
+Now that you’ve built a solid foundation in querying, filtering, joining, and summarizing data, you're ready to apply these skills to answer real-world questions. In corrections work, SQL is an essential tool that helps analysts and decision-makers uncover insights, track outcomes, and monitor progress across facilities, programs, and populations.
+
+Corrections analysts are often asked questions like:
+
+- How many residents were admitted to each facility last month?
+
+- What is the average sentence length by offense group?
+
+-  Which counties send the most residents into the system?
+
+These are not just hypothetical queries—they're common, high-value questions used in everything from administrative reporting and strategic planning to improving operational efficiency. As an analyst, your ability to quickly and accurately generate answers to these types of questions helps your agency make data-informed decisions. 
+
+Let's take a look at one more real-world example applying some of our best practices!
+
+--------------------------------------------------------------------
+
+
+### Average sentence length by facility
+
+Facility directors want to understand how long, on average, residents are sentenced to serve at each location so they can plan programming, staffing levels, and health services accordingly. You’re tasked with generating a report that shows the average sentence length (in months) for all residents by facility. Your supervisor also asks you to include comments explaining the code you use to generate the report.
+
+
+```{.sql .interactive .state_doc}
+/*
+This query joins the intakes table to the facilities table on facil_id, converts sentence_years and sentence_months into total months, calculates the average sentence length in months using AVG(), rounds the result to one decimal place with ROUND(), and groups the output by facility name so you see one average per facility.
+*/
+SELECT f.facil_name,
+       ROUND(AVG(i.sentence_years * 12 + i.sentence_months), 1) AS avg_sentence_months
+FROM intakes AS i
+JOIN facilities AS f 
+  ON i.facil_id = f.facil_id
+GROUP BY f.facil_name;
+
+
+```
+
+
+![](images/avg_sent_length.png)
+
+Notice that there is a **comment section provided at the top of the query** explaining what the query does. This is a key best practice—it helps anyone reading the code understand your logic without needing to reverse-engineer the query. The query also demonstrates **good aliasing** by using short, readable aliases (`i` and `f`), **rounds the result** for presentation clarity, and uses a **descriptive alias** (`avg_sentence_months`) to label the output column clearly.
+
+
+
+## Key takeaways
+
+- You can perform arithmetic in SQL to calculate sentence lengths, durations, and more.
+
+- Aliases make your results easier to interpret and your queries easier to read.
+
+- Date expressions are powerful tools for analyzing incarceration durations, pending cases, and release trends.
+
+- `JULIANDAY()` is a powerful SQLite function to calculate date differences.
+
+- Built-in functions enhance the precision and clarity of your data outputs.
+
+- By combining joins, filters, calculations, and functions, you can answer a wide range of corrections-related questions.
+
+- Always format and comment your queries for readability and future edits.
+
+- Following best practices helps ensure your queries are maintainable, accurate, and professional.
+
+--------------------------------------------------------------------
+ Congratulations 🎉! You’ve reached the end of the course. You now have a solid foundation in SQL for corrections analytics. From here, you can explore more advanced SQL topics like subqueries, window functions, or data validation techniques—or begin applying what you've learned directly to real data and dashboards.
+
+## Additional resources
+
+- W3Schools.com (Website with more in-depth SQL learning and practice)
+- MySQL Cookbook, Fourth Edition

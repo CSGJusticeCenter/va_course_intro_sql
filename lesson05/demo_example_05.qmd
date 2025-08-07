@@ -1,0 +1,28 @@
+---
+title: "Lesson 5: Applying SQL to Corrections Data"
+engine: knitr
+filters:
+  - interactive-sql
+databases:
+  - name: state_doc
+    path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
+---
+
+
+Lesson 5 demo
+
+```{.sql .interactive .state_doc}
+/*
+This query joins the intakes table to the facilities table on facil_id, converts sentence_years and sentence_months into total months, calculates the average sentence length in months using AVG(), and rounds the result to one decimal place with ROUND(). It also calculates the average number of days between sentence_date and admission_date using the JULIANDAY() function. The results are grouped by facility name so you see one summary per facility.
+*/
+
+SELECT f.facil_name,
+       ROUND(AVG(i.sentence_years * 12 + i.sentence_months), 1) AS avg_sentence_months,
+       ROUND(AVG(JULIANDAY(i.admission_date) - JULIANDAY(i.sentence_date)), 1) AS avg_days_to_admission
+FROM intakes AS i
+JOIN facilities AS f 
+  ON i.facil_id = f.facil_id
+GROUP BY f.facil_name;
+
+
+```
