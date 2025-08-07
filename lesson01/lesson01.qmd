@@ -101,7 +101,12 @@ FROM person;
 - **A `SELECT` statement retrieves data from a table.** You can choose specific columns to display using `SELECT column_name`.
 - **Understanding SQL is essential for corrections analysts** because it enables efficient reporting, case tracking, and population analysis.
 
-## Additional Resources
+
 
 This lesson provides a foundation for SQL querying. In the next lesson, you'll learn how to refine queries further by applying filtering techniques with `WHERE`, `AND`, `OR`, and `NOT`.
 
+
+## Additional Resources
+
+- W3Schools.com (Website with more in-depth SQL learning and practice)
+- MySQL Cookbook, Fourth Edition

@@ -1,0 +1,301 @@
+---
+title: "Lesson 2: Filtering and Sorting Data with SQL"
+engine: knitr
+filters:
+  - interactive-sql
+databases:
+  - name: state_doc
+    path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
+---
+
+## Introduction
+
+Now that you understand the basics of SQL and relational databases, and can select specific data from tables, it’s time to refine your queries by filtering and sorting data. The ability to retrieve specific records based on conditions is essential for corrections analysts who need to analyze resident populations, intake trends, and case processing timelines.
+
+This lesson covers:
+
+- The `WHERE` clause for filtering records
+
+- Using logical operators (`AND`, `OR`, `NOT`) to refine searches
+
+- Sorting results with `ORDER BY`
+
+- Handling missing or unknown values with `IS NULL` and `IS NOT NULL`
+
+## Filtering data with `WHERE`
+
+In SQL, the `WHERE` clause is used to filter your data so that you only retrieve the rows that meet specific criteria. This is one of the most important tools for corrections analysts because it allows you to focus your analysis on a particular subset of data — for example, residents who meet certain demographic criteria, cases from specific counties, or intakes within a particular date range.
+
+In practice, data tables can contain thousands—or even millions—of records. Without filtering, your query might return far more data than you can reasonably interpret or analyze. By using `WHERE`, you can narrow the scope of your queries to return only the data that is most relevant to the question at hand.
+
+
+The `WHERE` clause is often used in conjunction with **comparison operators**, which define the condition a field must meet for a row to be included in the results:
+
+- `=` (equal to)
+
+- `!=` or `<>` (not equal to)
+
+- `>` (greater than)
+
+- `<` (less than)
+
+- `>=` (greater than or equal to)
+
+- `<=` (less than or equal to)
+
+Let’s look at how this works in practice using examples that a corrections analyst might encounter:
+
+
+### Finding residents in a specific facility
+
+Suppose you need to review the records for residents currently housed at  the North State Correctional Facility (`NSCF`). Using `facil_id` from your intakes table, you can write use the following query:
+
+```{.sql .interactive .state_doc}
+SELECT intake_id, resident_id, facil_id, admission_date, sentence_date
+FROM intakes
+WHERE facil_id = 'NSCF';
+```
+
+**What this query does:**
+
+The intakes table is filtered to show only those rows where the `facil_id` is equal to `NSCF`. This kind of targeted filtering is useful when you're doing facility-specific analysis — like monitoring capacity and population characteristics at a particular location.
+
+
+![](images/nscf_residents.png)
+
+
+### Finding Residents by Age of First Arrest
+
+Let's say you are preparing a report for your supervisor on residents who had contact with the justice system at an early age. You want to identify all residents whose first arrest occurred at age 18 or younger. Here's how you would write that query:
+
+```{.sql .interactive .state_doc}
+SELECT resident_id, first_name, last_name, age_at_first_arrest
+FROM residents
+WHERE age_at_first_arrest <= 18;
+```
+
+
+**What this query does:**
+
+It filters the `residents` table to return only those rows where the `age_at_first_arrest` is 18 or younger. This type of analysis can help staff assess trends in early justice involvement and potentially inform prevention or intervention strategies.
+
+![](images/residents_first_arrest.png)
+
+
+
+## Using logical operators (`AND`, `OR`, `NOT`)
+
+Now that you've learned how to filter data with the WHERE clause, you’ll often find that you need to apply more than one condition at a time. That’s where logical operators come in.
+
+Logical operators allow you to build more complex filters by combining multiple conditions. This is extremely useful for corrections analysts who need to refine their queries to capture very specific subsets of data—such as residents with particular sentencing characteristics, from a certain location, or admitted during a specific time period.
+
+There are three main logical operators used in SQL: 
+
+- `AND` returns records only if **all** conditions are true.
+
+- `OR` returns records if **any** of the conditions are true.
+
+- `NOT` **excludes** records that meet a certain condition.
+
+These operators help you shape your queries to mirror the real-world logic behind your reporting questions. Let's look at some real-world examples:
+
+### Finding residents by sentence length and county
+
+Suppose the department head asks you to produce a report with a list of residents admitted from County 5 serving a sentence of more than 10 years. Use the `AND` operator to ensure both conditions are applied:
+
+```{.sql .interactive .state_doc}
+SELECT resident_id, sentence_years, sentence_months, county_id
+FROM intakes
+WHERE sentence_years > 10 AND county_id = 5;
+```
+
+**What this query does:**
+
+This query filters the intakes table to include only residents with more than 10 years in their sentence **and** who were admitted from County 5. Both conditions must be true for a record to be included. This type of filtering is useful when identifying high-sentence populations from a specific geographic area—perhaps for resource planning.
+
+![](images/sentence_and_county.png)
+
+### Finding residents from multiple counties
+
+Let’s say you're working on a review of intake trends from Counties 5 and 7. Use the `OR` operator to include residents from either of these counties:
+
+```{.sql .interactive .state_doc}
+SELECT intake_id, resident_id, county_id, admission_date, sentence_date, rel_ready_date
+FROM intakes
+WHERE county_id = 5 OR county_id = 7;
+```
+
+
+**What this query does:**
+
+This returns any record where the resident was admitted from **either** County 5 **or** County 7. `OR` is helpful when you want to analyze data across a set of values that aren’t mutually exclusive but still relevant to your work.
+
+
+![](images/multi_country_residents.png)
+
+### Excluding certain facilities
+
+Imagine that you need to generate a report to analyze intake trends for the men's facilities. You can write a query to exclude the one women's facility `SWSCF` by using `NOT` or `!=`:
+
+```{.sql .interactive .state_doc}
+SELECT intake_id, facil_id, sentence_date, admission_date, rel_ready_date
+FROM intakes
+WHERE NOT facil_id = 'SWSCF';
+```
+
+or
+
+```{.sql .interactive .state_doc}
+SELECT intake_id, facil_id, sentence_date, admission_date, rel_ready_date
+FROM intakes
+WHERE facil_id != 'SWSCF';
+```
+
+**What this query does:**
+
+Both versions exclude all records for residents housed at `SWSCF`. This kind of exclusion is important when preparing population-specific analysis — for example, to inform programming, staffing, or space allocation for women. 
+
+![](images/excluding_residents.png)
+
+
+Logical operators give analysts the flexibility to adjust queries to real-world questions that rarely depend on a single filter. By combining conditions with `AND`, `OR`, and `NOT`, you can build precise queries that return only the data you truly need.
+
+
+## Sorting results with `ORDER BY`
+
+When you run a SQL query, the database returns the matching results, but it doesn’t automatically sort them in a meaningful order. As a corrections analyst, you’ll often want to organize your data to quickly identify trends, patterns, or outliers—like the next scheduled releases, the longest wait times for processing, or the most recent admissions.
+
+The `ORDER BY` clause allows you to control the order in which your query results appear, based on one or more columns. This is particularly helpful when you're preparing reports, dashboards, or even quality assurance reviews where data needs to be structured for easier interpretation.
+
+
+### Sorting in ascending and descending order
+
+SQL allows you to sort your results in either ascending or descending order using the following keywords:
+
+- `ASC`: Ascending order (default sorting order)
+  - Sorts numbers **smallest to largest**
+  - Sorts text **A to Z**
+  - Sorts dates **earliest to latest**
+- `DESC`: Descending order
+  - Sorts numbers **largest to smallest** 
+  - Sorts text **Z to A**
+  - Sorts dates  **latest to earliest**
+  
+This sorting ability helps surface the top or bottom of your dataset, depending on the use case. Let's practice sorting your corrections data:
+
+
+
+#### Sorting by expected release date `ASC` (oldest first)
+
+You've been tasked with generating a report to monitor upcoming releases. You can use `ORDER BY` on the `exp_release_date` field to sort the results from earliest to latest:
+
+
+```{.sql .interactive .state_doc}
+SELECT intake_id, resident_id, admission_date, exp_release_date
+FROM intakes
+ORDER BY exp_release_date ASC;
+```
+
+**What this query does:**
+
+This query retrieves intake records and arranges them so that residents with the soonest expected release dates appear first. This can help your team prioritize review of residents nearing release, coordinate transitional services, or verify release date accuracy.
+
+![](images/release_asc.png)
+
+#### Sorting by admission date `DESC` (newest first)
+
+Let's say you wanted to monitor the intake progress for the most recent admission intakes. You can sort the data in descending order based on `admission_date`:
+
+```{.sql .interactive .state_doc}
+SELECT intake_id, resident_id, admission_date, county_id, off_group
+FROM intakes
+ORDER BY admission_date DESC;
+```
+
+
+**What this query does:**
+
+This query returns records starting with the most recent admissions and going backward. This is useful when analyzing intake patterns, monitoring intake capacity, or flagging cases that may have processing delays.
+
+
+![](images/admin_desc.png)
+
+
+## Handling missing data (`NULL` values)
+
+In the real world, not all data is complete or perfect—especially in large, complex datasets like those used in corrections systems. Sometimes, information might be unavailable at the time of data entry, intentionally left blank, or simply not collected. In a database, these unknown or missing values are represented as `NULL`.
+
+Understanding how to work with `NULL` values is essential for corrections analysts, as these gaps in the data can tell you just as much as the values that are present. For example, a blank birth country field could indicate a need to review and update intake documentation.
+
+SQL provides two specific conditions to work with `NULL` values:
+
+- `IS NULL`: Checks for missing data
+
+- `IS NOT NULL`: Checks for existing (non-missing) data
+
+You cannot use standard comparison operators like `=` or `!=` to check for `NULL` - doing so won’t return accurate results. Always use `IS NULL` or `IS NOT NULL` when handling these values.
+
+Let's look at some examples:
+
+
+### Finding residents with an unknown birth country
+
+Let’s say you’re conducting a data audit and want to identify resident records that are missing birth country information. This might be part of an effort to improve data quality or ensure that records meet reporting standards. You can use this query to find records with a missing birth country:
+
+```{.sql .interactive .state_doc}
+SELECT resident_id, first_name, last_name, birth_country
+FROM residents
+WHERE birth_country IS NULL;
+```
+
+
+**What this query does:**
+
+This pulls all resident records where the birth country has not been entered. This can help you flag records that may require follow-up or correction during file reviews or audits.
+
+![](images/unknown_birth_country.png)
+
+
+
+### Finding residents with a calculated release date
+
+Perhaps you've been asked to compile a list of intake cases that have already had a release date calculated for auditing purposes. The following query can be used to generate that report:
+
+```{.sql .interactive .state_doc}
+SELECT intake_id, resident_id, sentence_date, admission_date, rel_ready_date
+FROM intakes
+WHERE rel_ready_date IS NOT NULL;
+```
+
+
+**What this query does:**
+
+This query filters the intake records to return only those where a release date has been entered. This helps you isolate completed cases and exclude those that require further attention. 
+
+![](images/rel_ready_cal.png)
+
+Being comfortable with `NULL` values allows you to account for gaps in your data and avoid false assumptions. In corrections work, this can be the difference between catching a missed release date and allowing a case to sit idle due to an unflagged issue.
+
+
+## Key takeaways
+
+- The `WHERE` clause allows you to filter your results and return only the records that meet specific conditions. This is critical when you need to focus on certain populations—like residents from a particular facility, county, or sentence range—without being overwhelmed by unnecessary data.
+
+- Logical operators (`AND`, `OR`, `NOT`) help you combine multiple conditions in a single query. These tools allow you to construct more refined searches, which is especially useful when tracking special case types or creating targeted reports for your supervisors or department heads.
+
+- `ORDER BY` lets you sort your results in ascending or descending order. Whether you're identifying residents with the longest sentence lengths or reviewing upcoming release dates, sorting can help you spot patterns, anomalies, and priority cases faster.
+
+- `NULL` values represent missing or unknown data in the database. Learning how to identify these using `IS NULL` and `IS NOT NULL` allows you to audit your data more effectively, flag incomplete records, and ensure your analyses are based on the most accurate and complete information available.
+
+Together, these skills allow you to explore your database with precision. Whether you’re writing quick filters or pulling detailed reports, being able to query based on specific conditions is foundational for any corrections analyst.
+
+--------------------------------------------------------------------
+
+In this lesson, you learned how to filter and sort data using SQL queries. In the next lesson, you’ll build on these concepts and be introduced to aggregate functions  - powerful tools that allow you to count, sum, and average your data to generate meaningful statistics and summaries.
+
+
+## Additional resources
+
+- W3Schools.com (Website with more in-depth SQL learning and practice)
+- MySQL Cookbook, Fourth Edition
+

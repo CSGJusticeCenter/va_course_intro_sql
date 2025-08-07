@@ -1,0 +1,19 @@
+---
+title: "Lesson 2: Filtering and Sorting Data with SQL"
+engine: knitr
+filters:
+  - interactive-sql
+databases:
+  - name: state_doc
+    path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
+---
+
+
+
+
+```{.sql .interactive .state_doc}
+
+```
+
+
+
