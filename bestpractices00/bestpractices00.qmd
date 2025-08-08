@@ -1,0 +1,62 @@
+---
+title: "Best Practices for Querying SQL Databases for Corrections Analysis"
+engine: knitr
+filters:
+  - interactive-sql
+databases:
+  - name: state_doc
+    path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
+---
+
+
+SQL is the foundational programming language for querying and analyzing structured data in corrections. Building strong query habits will help you write clean, efficient SQL queries that drive smart, data-informed decisions in corrections work.
+
+## Get familiar with your data.
+
+Good analysis begins with a strong understanding of the data at hand. Before writing any queries, it’s essential to understand the structure of your tables. Review how they relate to one another, including which fields serve as primary and foreign keys. Familiarize yourself with column names, data types, and what each field represents. This will help ensure that your queries are logically sound. 
+
+Entity Relationship Diagrams (ERDs) are especially useful tools for this step. ERDs visually map out how tables in a database are connected, making it easier to understand relationships and cardinality. Reviewing an ERD can help you quickly identify how to join tables correctly and avoid common query errors.
+
+Reference tables, like those for counties or education levels, enrich queries by providing readable labels instead of numeric codes. This knowledge prevents common mistakes like incorrect joins or meaningless output.
+
+## Build your queries step by step.
+
+Start your query with a basic `SELECT` statement, building on this foundation by introducing filters, joins, and/or calculations one at a time. This helps isolate errors and ensures each part of the query works as intended.
+
+Filtering is central to focused analysis. Use `LIMIT` or `WHERE` clauses to test queries to avoid long run times or massive result sets—especially when working with larger datasets. Small-scale testing reduces processing time and prevents overwhelming outputs.
+
+## Use aggregate functions for meaningful summaries.
+
+Aggregate functions like `COUNT()`, `AVG()`, and `SUM()` help analysts summarize trends and patterns across large datasets. Use them in combination with GROUP BY to answer questions like “How many residents are admitted per facility?” or “What is the average sentence by county?”
+
+## Join tables with clear logic and intent.
+
+Most corrections data is stored in multiple related tables. Use `INNER JOIN` when you only want records with matches in both tables and `LEFT JOIN` when you want all records from the left-hand table—even if there are no matches in the right table.
+
+Give tables short, descriptive aliases like `res`, `intk`, or `facil` to make long queries more readable. Always double-check join conditions to prevent duplicate rows or misaligned results.
+
+## Handle missing values intentionally.
+
+In SQL, missing values are represented as NULL. Use `IS NULL` or `IS NOT NULL` to identify them—standard operators like `=` won’t work. 
+
+NULLs can affect filtering, joining, and calculations. Functions often ignore them, but arithmetic may return NULL if one value is missing.
+
+Missing data may indicate incomplete records or systemic reporting gaps. Document how you handle NULLs to support transparency and consistent interpretation.
+
+## Write for readability and maintainability.
+
+Clear formatting makes your queries easier to read, debug, and share. Place each clause (`SELECT`, `FROM`, `JOIN`, `WHERE`, etc.) on its own line and use consistent spacing, line breaks, and indentation.
+
+Use comments (`--` or `/* */`) to explain what your query does or to temporarily disable parts of it. Readable queries support collaboration and long-term use.
+
+## Think like a corrections analyst.
+
+All queries should be grounded in real-world corrections questions. Whether tracking new admissions, comparing facility trends, or analyzing sentencing, think critically about what the data reveals.
+
+Ask: What insight will this provide? What action or goal could it support? Aligning SQL queries with operational goals ensures your work is impactful. 
+
+## Always test and review your queries.
+
+Testing and reviewing are critical steps. After writing a query, check to ensure the results make sense—especially after joins or aggregations. Compare outputs to known data points when possible.
+
+Save and organize reusable queries for future reporting. Consistently reviewing your SQL logic helps ensure outputs are accurate, efficient, and ready for stakeholder use.
