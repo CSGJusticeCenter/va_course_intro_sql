@@ -60,10 +60,6 @@ WHERE facil_id = 'NSCF';
 
 The intakes table is filtered to show only those rows where the `facil_id` is equal to `NSCF`. This kind of targeted filtering is useful when you're doing facility-specific analysis — like monitoring capacity and population characteristics at a particular location.
 
-
-![](images/nscf_residents.png)
-
-
 ### Finding Residents by Age of First Arrest
 
 Let's say you are preparing a report for your supervisor on residents who had contact with the justice system at an early age. You want to identify all residents whose first arrest occurred at age 18 or younger. Here's how you would write that query:
@@ -78,10 +74,6 @@ WHERE age_at_first_arrest <= 18;
 **What this query does:**
 
 It filters the `residents` table to return only those rows where the `age_at_first_arrest` is 18 or younger. This type of analysis can help staff assess trends in early justice involvement and potentially inform prevention or intervention strategies.
-
-![](images/residents_first_arrest.png)
-
-
 
 ## Using logical operators (`AND`, `OR`, `NOT`)
 
@@ -113,8 +105,6 @@ WHERE sentence_years > 10 AND county_id = 5;
 
 This query filters the intakes table to include only residents with more than 10 years in their sentence **and** who were admitted from County 5. Both conditions must be true for a record to be included. This type of filtering is useful when identifying high-sentence populations from a specific geographic area—perhaps for resource planning.
 
-![](images/sentence_and_county.png)
-
 ### Finding residents from multiple counties
 
 Let’s say you're working on a review of intake trends from Counties 5 and 7. Use the `OR` operator to include residents from either of these counties:
@@ -129,9 +119,6 @@ WHERE county_id = 5 OR county_id = 7;
 **What this query does:**
 
 This returns any record where the resident was admitted from **either** County 5 **or** County 7. `OR` is helpful when you want to analyze data across a set of values that aren’t mutually exclusive but still relevant to your work.
-
-
-![](images/multi_country_residents.png)
 
 ### Excluding certain facilities
 
@@ -154,9 +141,6 @@ WHERE facil_id != 'SWSCF';
 **What this query does:**
 
 Both versions exclude all records for residents housed at `SWSCF`. This kind of exclusion is important when preparing population-specific analysis — for example, to inform programming, staffing, or space allocation for women. 
-
-![](images/excluding_residents.png)
-
 
 Logical operators give analysts the flexibility to adjust queries to real-world questions that rarely depend on a single filter. By combining conditions with `AND`, `OR`, and `NOT`, you can build precise queries that return only the data you truly need.
 
@@ -200,8 +184,6 @@ ORDER BY exp_release_date ASC;
 
 This query retrieves intake records and arranges them so that residents with the soonest expected release dates appear first. This can help your team prioritize review of residents nearing release, coordinate transitional services, or verify release date accuracy.
 
-![](images/release_asc.png)
-
 #### Sorting by admission date `DESC` (newest first)
 
 Let's say you wanted to monitor the intake progress for the most recent admission intakes. You can sort the data in descending order based on `admission_date`:
@@ -216,10 +198,6 @@ ORDER BY admission_date DESC;
 **What this query does:**
 
 This query returns records starting with the most recent admissions and going backward. This is useful when analyzing intake patterns, monitoring intake capacity, or flagging cases that may have processing delays.
-
-
-![](images/admin_desc.png)
-
 
 ## Handling missing data (`NULL` values)
 
@@ -253,10 +231,6 @@ WHERE birth_country IS NULL;
 
 This pulls all resident records where the birth country has not been entered. This can help you flag records that may require follow-up or correction during file reviews or audits.
 
-![](images/unknown_birth_country.png)
-
-
-
 ### Finding residents with a calculated release date
 
 Perhaps you've been asked to compile a list of intake cases that have already had a release date calculated for auditing purposes. The following query can be used to generate that report:
@@ -271,8 +245,6 @@ WHERE rel_ready_date IS NOT NULL;
 **What this query does:**
 
 This query filters the intake records to return only those where a release date has been entered. This helps you isolate completed cases and exclude those that require further attention. 
-
-![](images/rel_ready_cal.png)
 
 Being comfortable with `NULL` values allows you to account for gaps in your data and avoid false assumptions. In corrections work, this can be the difference between catching a missed release date and allowing a case to sit idle due to an unflagged issue.
 

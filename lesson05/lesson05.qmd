@@ -109,9 +109,6 @@ JOIN residents AS r ON i.resident_id = r.resident_id;
 
 - Pulls this info from both the intakes and residents tables using a join.
 
-
-![](images/standardized_reporting.png)
-
 ## Working with date expressions
 
 Many important corrections metrics depend on understanding the time between two events—like time from admission to release, or sentence date to release readiness. To calculate those time intervals, SQL provides helpful date functions.
@@ -157,9 +154,6 @@ FROM intakes;
 
 - Subtracting them gives you the number of days each person has been in custody.
 
-![](images/custody_days.png)
-
-
 ### Time between sentence date and admission date
 
 Quarterly audits are due and you've been tasked with generating a report to audit the number of days it takes a person to be admitted into custody after being sentenced. You can use the following query:
@@ -179,8 +173,6 @@ FROM intakes;
 - Calculates the difference in days, giving you the number of days from sentencing to admission for each resident.
 
 -	The result of the calculation is put in a new field called `days_to_admit`.
-
-![](images/days_to_admit.png)
 
 ## Formatting and commenting your queries
 
@@ -290,7 +282,7 @@ Corrections analysts are often asked questions like:
 
 - What is the average sentence length by offense group?
 
--  Which counties send the most residents into the system?
+- Which counties send the most residents into the system?
 
 These are not just hypothetical queries—they're common, high-value questions used in everything from administrative reporting and strategic planning to improving operational efficiency. As an analyst, your ability to quickly and accurately generate answers to these types of questions helps your agency make data-informed decisions. 
 
@@ -318,8 +310,6 @@ GROUP BY f.facil_name;
 
 ```
 
-
-![](images/avg_sent_length.png)
 
 Notice that there is a **comment section provided at the top of the query** explaining what the query does. This is a key best practice—it helps anyone reading the code understand your logic without needing to reverse-engineer the query. The query also demonstrates **good aliasing** by using short, readable aliases (`i` and `f`), **rounds the result** for presentation clarity, and uses a **descriptive alias** (`avg_sentence_months`) to label the output column clearly.
 

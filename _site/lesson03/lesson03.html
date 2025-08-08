@@ -165,7 +165,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb1"><pre class="sourceCode sql interactive state_doc code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">AVG</span>(sentence_years) <span class="kw">AS</span> average_sentence_years</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> intakes;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="images/avg_sen_years.png" class="img-fluid"></p>
 <p>Now, instead of seeing a default column name like <code>avg(sentence_years)</code>, the result will display a column called <code>average_sentence_years</code>, which is much clearer and easier to understand in a report or dashboard.</p>
 <p>Aliases are especially helpful under the following circumstances:</p>
 <ul>
@@ -220,7 +219,6 @@ Data Quality Assurance
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This query counts every row in the <code>residents</code> table and gives the result an alias (<code>total_residents</code>) using the <code>AS</code> keyword. It’s a quick way to assess the size of the population you’re working with.</p>
-<p><img src="images/total_res.png" class="img-fluid"></p>
 </section>
 <section id="calculating-average-sentence-length" class="level3">
 <h3 class="anchored" data-anchor-id="calculating-average-sentence-length">Calculating average sentence length</h3>
@@ -231,7 +229,6 @@ Data Quality Assurance
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This query calculates the average number of sentence years across all intake records.</p>
-<p><img src="images/avg_sen_length.png" class="img-fluid"></p>
 <p>These types of calculations are not only useful for internal reporting, but they also support external transparency, performance measurement, and strategic decision-making.</p>
 </section>
 </section>
@@ -258,7 +255,6 @@ Data Quality Assurance
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This query groups all intake records by <code>facil_id</code> and counts how many records (residents) are in each group. The result shows the total number of residents per facility.</p>
-<p><img src="images/facil_total_res.png" class="img-fluid"></p>
 <p><em>In a corrections setting, this could help identify overcrowded facilities or support planning for transfers and resource allocation.</em></p>
 </section>
 <section id="average-sentence-length-by-county" class="level3">
@@ -271,7 +267,6 @@ Data Quality Assurance
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This query groups intake records by county_id and calculates the average number of sentence years for each group.</p>
-<p><img src="images/county_avg_sen.png" class="img-fluid"></p>
 <p><em>This kind of insight could help analysts detect sentencing disparities across counties or monitor the effectiveness of recent system improvements.</em></p>
 <p>These examples show just a few ways that grouping data enhances analytical insights. By breaking down large tables into meaningful subgroups, corrections analysts can go beyond individual-level records and begin to see patterns, trends, and opportunities for improvement in the system.</p>
 </section>
@@ -293,7 +288,6 @@ Data Quality Assurance
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This query returns only those facilities where the resident count exceeds 100.</p>
-<p><img src="images/facil_100_plus.png" class="img-fluid"></p>
 <p><em>This kind of query could help prioritize where to focus efforts for population management or support resource allocation in overcrowded facilities.</em></p>
 </section>
 <section id="counties-with-high-average-sentences" class="level3">
@@ -307,7 +301,6 @@ Data Quality Assurance
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This filters the grouped county data to show only those counties with an average sentence exceeding 10 years.</p>
-<p><img src="images/high_avg_sen.png" class="img-fluid"></p>
 <p><em>This is useful for system reviews or identifying jurisdictions where sentencing practices may need further investigation.</em></p>
 <p>The <code>HAVING</code> clause gives you precision when working with aggregated data, allowing you to answer complex questions and produce focused, actionable insights.</p>
 </section>
@@ -327,7 +320,6 @@ Data Quality Assurance
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This query filters the <code>intakes</code> table to include only residents admitted after January 1, 2022. It then groups the data by <code>county_id</code> and calculates the average number of sentence years for each county.</p>
-<p><img src="images/recent_admins.png" class="img-fluid"></p>
 <p><em>This type of query is valuable for identifying trends in sentencing across different counties over a recent timeframe.</em></p>
 </section>
 </section>
@@ -346,7 +338,6 @@ Data Quality Assurance
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This query groups the data by county_id and counts how many intake records exist for each one. It then sorts the results in descending order, so the counties with the highest number of intakes appear first.</p>
-<p><img src="images/intake_by_county.png" class="img-fluid"></p>
 <p><em>By sorting this way, corrections analysts can quickly see which counties are sending the most people into the system. This information can guide decisions about staffing, resource allocation, or the need for further investigation into high-volume regions. It may also help inform collaboration or support efforts with local jurisdictions.</em></p>
 </section>
 </section>

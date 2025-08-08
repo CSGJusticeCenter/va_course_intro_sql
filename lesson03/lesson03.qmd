@@ -45,8 +45,6 @@ SELECT AVG(sentence_years) AS average_sentence_years
 FROM intakes;
 ```
 
-![](images/avg_sen_years.png)
-
 Now, instead of seeing a default column name like `avg(sentence_years)`, the result will display a column called `average_sentence_years`, which is much clearer and easier to understand in a report or dashboard.
 
 
@@ -116,8 +114,6 @@ FROM residents;
 
 This query counts every row in the `residents` table and gives the result an alias (`total_residents`) using the `AS` keyword. It’s a quick way to assess the size of the population you're working with.
 
-![](images/total_res.png)
-
 ### Calculating average sentence length
 
 Now suppose your supervisor is reviewing sentencing trends and wants to know the average sentence length (in years) for residents in your system. You could use:
@@ -130,8 +126,6 @@ FROM intakes;
 **What this query does:**
 
 This query calculates the average number of sentence years across all intake records.
-
-![](images/avg_sen_length.png)
 
 These types of calculations are not only useful for internal reporting, but they also support external transparency, performance measurement, and strategic decision-making.
 
@@ -170,8 +164,6 @@ GROUP BY facil_id;
 
 This query groups all intake records by `facil_id` and counts how many records (residents) are in each group. The result shows the total number of residents per facility.
 
-![](images/facil_total_res.png)
-
 *In a corrections setting, this could help identify overcrowded facilities or support planning for transfers and resource allocation.*
 
 
@@ -188,8 +180,6 @@ GROUP BY county_id;
 **What this query does:**
 
 This query groups intake records by county_id and calculates the average number of sentence years for each group.
-
-![](images/county_avg_sen.png)
 
 *This kind of insight could help analysts detect sentencing disparities across counties or monitor the effectiveness of recent system improvements.*
 
@@ -220,8 +210,6 @@ HAVING COUNT(*) > 100;
 
 This query returns only those facilities where the resident count exceeds 100.
 
-![](images/facil_100_plus.png)
-
 *This kind of query could help prioritize where to focus efforts for population management or support resource allocation in overcrowded facilities.*
 
 
@@ -239,8 +227,6 @@ HAVING AVG(sentence_years) > 10;
 **What this query does:**
 
 This filters the grouped county data to show only those counties with an average sentence exceeding 10 years.
-
-![](images/high_avg_sen.png)
 
 *This is useful for system reviews or identifying jurisdictions where sentencing practices may need further investigation.*
 
@@ -269,8 +255,6 @@ GROUP BY county_id;
 
 This query filters the `intakes` table to include only residents admitted after January 1, 2022. It then groups the data by `county_id` and calculates the average number of sentence years for each county.
 
-![](images/recent_admins.png)
-
 *This type of query is valuable for identifying trends in sentencing across different counties over a recent timeframe.*
 
 ## Sorting aggregated results
@@ -294,8 +278,6 @@ ORDER BY intake_count DESC;
 **What this query does:**
 
 This query groups the data by county_id and counts how many intake records exist for each one. It then sorts the results in descending order, so the counties with the highest number of intakes appear first.
-
-![](images/intake_by_county.png)
 
 *By sorting this way, corrections analysts can quickly see which counties are sending the most people into the system. This information can guide decisions about staffing, resource allocation, or the need for further investigation into high-volume regions. It may also help inform collaboration or support efforts with local jurisdictions.*
 

@@ -276,7 +276,6 @@ Note
 </div>
 <p><strong>What these queries do:</strong></p>
 <p>Both queries pull only records that exist in both residents and intakes. It retrieves the first and last names of residents from the <code>residents</code> table and the admission date from the <code>intakes</code> table. It could be useful for printing a roster or other type of report.</p>
-<p><img src="images/inner_join.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="left-join-keeping-all-records-from-the-first-left-table" class="level2">
@@ -297,7 +296,6 @@ Note
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This query returns a list of all admissions from the intakes table, even if there is no matching resident information in the residents table. This is useful for identifying admissions that may be missing all or partial resident records. Notice in the example that the <code>resident_id = doc_0003</code> birth country is blank. In this case the resident has a record, but it is incomplete.</p>
-<p><img src="images/left_join.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="right-join-keeping-all-records-from-the-second-right-table" class="level2">
@@ -317,7 +315,6 @@ Note
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This would return all intakes, even those that don’t have matching residents. This is useful when checking for unmatched or abandoned records in your system. In our database, all of our intake records are matched to residents, so no nulls were returned.</p>
-<p><img src="images/right_join.png" class="img-fluid"></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -349,7 +346,6 @@ Note
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This returns everything—residents without intakes, intakes without residents, and all matched pairs. In our database, all of our intake records are matched to residents, so no nulls were returned.</p>
-<p><img src="images/outer_join.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="recap-visualizing-joins" class="level2">
@@ -372,7 +368,6 @@ Note
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ON</span> i.county_id <span class="op">=</span> c.county_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>What this query does:</strong> It joins the <code>intakes</code> table with the <code>counties</code> reference table using <code>county_id</code> and replaces the ID with a more digestible county name.</p>
-<p><img src="images/ref_join.png" class="img-fluid"></p>
 <p>In a corrections environment, this helps communicate data findings more clearly—especially when sharing dashboards or reports with stakeholders who may not recognize internal ID numbers.</p>
 </section>
 </section>
@@ -396,7 +391,6 @@ Note
 </div>
 <p><strong>What this query does:</strong></p>
 <p>It combines three tables to show which residents were admitted to which facilities and when.</p>
-<p><img src="images/chain_join.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="key-takeaways" class="level2">

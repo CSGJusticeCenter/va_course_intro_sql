@@ -78,7 +78,8 @@ FROM table_name;
 
 To retrieve all columns from a table, you can use `*`:
 
-```{.sql .interactive .state_doc}
+```{sql}
+#| eval: false
 SELECT *
 FROM person;
 ```
@@ -89,7 +90,8 @@ This query returns all records from the **Individuals Table**, displaying every 
 
 If you only need certain columns, specify them by name:
 
-```{.sql .interactive .state_doc}
+```{sql}
+#| eval: false
 SELECT person_id, last_name, dob
 FROM person;
 ```

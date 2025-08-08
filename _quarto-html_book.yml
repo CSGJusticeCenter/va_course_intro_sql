@@ -5,11 +5,14 @@ project:
 book:
   title: "Introduction to SQL for Corrections Analysts"
   author: "The Council of State Governments Justice Center"
-  date: "2025/03/13"
+  date: "2025/08/01"
   chapters:
     - index.qmd
     - lesson01/lesson01.qmd  
-
+    - lesson02/lesson02.qmd  
+    - lesson03/lesson03.qmd  
+    - lesson04/lesson04.qmd  
+    - lesson05/lesson05.qmd  
 format:
   html:
     number-sections: false

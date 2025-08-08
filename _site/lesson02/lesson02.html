@@ -172,7 +172,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>What this query does:</strong></p>
 <p>The intakes table is filtered to show only those rows where the <code>facil_id</code> is equal to <code>NSCF</code>. This kind of targeted filtering is useful when you’re doing facility-specific analysis — like monitoring capacity and population characteristics at a particular location.</p>
-<p><img src="images/nscf_residents.png" class="img-fluid"></p>
 </section>
 <section id="finding-residents-by-age-of-first-arrest" class="level3">
 <h3 class="anchored" data-anchor-id="finding-residents-by-age-of-first-arrest">Finding Residents by Age of First Arrest</h3>
@@ -184,7 +183,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>What this query does:</strong></p>
 <p>It filters the <code>residents</code> table to return only those rows where the <code>age_at_first_arrest</code> is 18 or younger. This type of analysis can help staff assess trends in early justice involvement and potentially inform prevention or intervention strategies.</p>
-<p><img src="images/residents_first_arrest.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="using-logical-operators-and-or-not" class="level2">
@@ -208,7 +206,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This query filters the intakes table to include only residents with more than 10 years in their sentence <strong>and</strong> who were admitted from County 5. Both conditions must be true for a record to be included. This type of filtering is useful when identifying high-sentence populations from a specific geographic area—perhaps for resource planning.</p>
-<p><img src="images/sentence_and_county.png" class="img-fluid"></p>
 </section>
 <section id="finding-residents-from-multiple-counties" class="level3">
 <h3 class="anchored" data-anchor-id="finding-residents-from-multiple-counties">Finding residents from multiple counties</h3>
@@ -220,7 +217,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This returns any record where the resident was admitted from <strong>either</strong> County 5 <strong>or</strong> County 7. <code>OR</code> is helpful when you want to analyze data across a set of values that aren’t mutually exclusive but still relevant to your work.</p>
-<p><img src="images/multi_country_residents.png" class="img-fluid"></p>
 </section>
 <section id="excluding-certain-facilities" class="level3">
 <h3 class="anchored" data-anchor-id="excluding-certain-facilities">Excluding certain facilities</h3>
@@ -238,7 +234,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>What this query does:</strong></p>
 <p>Both versions exclude all records for residents housed at <code>SWSCF</code>. This kind of exclusion is important when preparing population-specific analysis — for example, to inform programming, staffing, or space allocation for women.</p>
-<p><img src="images/excluding_residents.png" class="img-fluid"></p>
 <p>Logical operators give analysts the flexibility to adjust queries to real-world questions that rarely depend on a single filter. By combining conditions with <code>AND</code>, <code>OR</code>, and <code>NOT</code>, you can build precise queries that return only the data you truly need.</p>
 </section>
 </section>
@@ -274,7 +269,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This query retrieves intake records and arranges them so that residents with the soonest expected release dates appear first. This can help your team prioritize review of residents nearing release, coordinate transitional services, or verify release date accuracy.</p>
-<p><img src="images/release_asc.png" class="img-fluid"></p>
 </section>
 <section id="sorting-by-admission-date-desc-newest-first" class="level4">
 <h4 class="anchored" data-anchor-id="sorting-by-admission-date-desc-newest-first">Sorting by admission date <code>DESC</code> (newest first)</h4>
@@ -286,7 +280,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This query returns records starting with the most recent admissions and going backward. This is useful when analyzing intake patterns, monitoring intake capacity, or flagging cases that may have processing delays.</p>
-<p><img src="images/admin_desc.png" class="img-fluid"></p>
 </section>
 </section>
 </section>
@@ -311,7 +304,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This pulls all resident records where the birth country has not been entered. This can help you flag records that may require follow-up or correction during file reviews or audits.</p>
-<p><img src="images/unknown_birth_country.png" class="img-fluid"></p>
 </section>
 <section id="finding-residents-with-a-calculated-release-date" class="level3">
 <h3 class="anchored" data-anchor-id="finding-residents-with-a-calculated-release-date">Finding residents with a calculated release date</h3>
@@ -323,7 +315,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>What this query does:</strong></p>
 <p>This query filters the intake records to return only those where a release date has been entered. This helps you isolate completed cases and exclude those that require further attention.</p>
-<p><img src="images/rel_ready_cal.png" class="img-fluid"></p>
 <p>Being comfortable with <code>NULL</code> values allows you to account for gaps in your data and avoid false assumptions. In corrections work, this can be the difference between catching a missed release date and allowing a case to sit idle due to an unflagged issue.</p>
 </section>
 </section>

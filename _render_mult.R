@@ -11,7 +11,7 @@ render_with_profile <- function(input = NULL, profile, as_job = FALSE) {
 quarto_profiles <- c("html_lms", "html_book", "docx")
 
 # which lessons do you want to render?
-lesson_numbers <- 18:20
+lesson_numbers <- 1:5
 lesson_numbers_pad <- stringr::str_pad(lesson_numbers, width = 2, pad = "0")
 lessons_to_render <- paste0("lesson", lesson_numbers_pad, "/lesson", lesson_numbers_pad, ".qmd")
 
@@ -22,7 +22,7 @@ to_render <- tidyr::crossing(lessons_to_render, quarto_profiles)
 render_with_profile("lesson18/lesson18.qmd", profile = "docx")
 
 # iterate over lessons and render
-purrr::walk(lessons_to_render, \(x) render_with_profile(x, profile = "docx"))
+purrr::walk(lessons_to_render, \(x) render_with_profile(x, profile = "html_lms"))
 
 # iterate over lessons AND profiles and render
 purrr::walk2(

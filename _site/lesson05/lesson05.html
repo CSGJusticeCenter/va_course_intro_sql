@@ -214,7 +214,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><code>JULIANDAY()</code> converts both dates into numeric values, calculates the difference, returning the number of days between when a resident was sentenced and is expected to be released.</p></li>
 <li><p>Pulls this info from both the intakes and residents tables using a join.</p></li>
 </ul>
-<p><img src="images/standardized_reporting.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="working-with-date-expressions" class="level2">
@@ -247,7 +246,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><code>JULIANDAY()</code> converts both dates into numeric values.</p></li>
 <li><p>Subtracting them gives you the number of days each person has been in custody.</p></li>
 </ul>
-<p><img src="images/custody_days.png" class="img-fluid"></p>
 </section>
 <section id="time-between-sentence-date-and-admission-date" class="level3">
 <h3 class="anchored" data-anchor-id="time-between-sentence-date-and-admission-date">Time between sentence date and admission date</h3>
@@ -265,7 +263,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Calculates the difference in days, giving you the number of days from sentencing to admission for each resident.</p></li>
 <li><p>The result of the calculation is put in a new field called <code>days_to_admit</code>.</p></li>
 </ul>
-<p><img src="images/days_to_admit.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="formatting-and-commenting-your-queries" class="level2">
@@ -388,7 +385,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> f.facil_name;</span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="images/avg_sent_length.png" class="img-fluid"></p>
 <p>Notice that there is a <strong>comment section provided at the top of the query</strong> explaining what the query does. This is a key best practice—it helps anyone reading the code understand your logic without needing to reverse-engineer the query. The query also demonstrates <strong>good aliasing</strong> by using short, readable aliases (<code>i</code> and <code>f</code>), <strong>rounds the result</strong> for presentation clarity, and uses a <strong>descriptive alias</strong> (<code>avg_sentence_months</code>) to label the output column clearly.</p>
 </section>
 </section>

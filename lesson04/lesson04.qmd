@@ -169,8 +169,6 @@ JOIN intakes AS i
 
 Both queries pull only records that exist in both residents and intakes. It retrieves the first and last names of residents from the `residents` table and the admission date from the `intakes` table. It could be useful for printing a roster or other type of report.
 
-![](images/inner_join.png)
-
 ## LEFT JOIN: Keeping all records from the first (left) table
 
 A `LEFT JOIN` returns all records from the **left table** (the table listed in the `FROM` clause) and any matching records from the **right table** (the table listed in the `LEFT JOIN` clause).  If there’s no match, you’ll still see the row from the left table, but the columns from the right table will show `NULL` or blank. You can use a `LEFT JOIN` when you want to keep all data from your main table—even if there’s no related information in the joined table. For example, if you want a list of all intakes, even if some are missing a linked resident, a `LEFT JOIN` ensures they aren’t excluded from your results.
@@ -195,11 +193,6 @@ LEFT JOIN residents AS r
 
 This query returns a list of all admissions from the intakes table, even if there is no matching resident information in the residents table. This is useful for identifying admissions that may be missing all or partial resident records. Notice in the example that the `resident_id = doc_0003` birth country is blank. In this case the resident has a record, but it is incomplete.
 
-![](images/left_join.png)
-
-
-
-
 ## RIGHT JOIN: Keeping all records from the second (right) table
 
 
@@ -223,7 +216,6 @@ RIGHT JOIN intakes AS i
 
 This would return all intakes, even those that don’t have matching residents. This is useful when checking for unmatched or abandoned records in your system. In our database, all of our intake records are matched to residents, so no nulls were returned.
 
-![](images/right_join.png)
 
 ::: {.callout-tip}
 ## Note
@@ -236,8 +228,6 @@ A `RIGHT JOIN` is less common, as it's just a flipped version of a `LEFT JOIN`. 
 A `FULL OUTER JOIN` returns every record from both tables, whether or not they match. Where there is no match, you'll see `NULLs`.  This type of join is useful when you need a complete view of two datasets—even when some records don’t align. For example, if you’re comparing two systems to find mismatched data (e.g., a list of facilities from two different databases), a full outer join can help identify entries that only exist in one source or the other.
 
 ### Full overview of resident and intake data
-
-
 
 ```{.sql .interactive .state_doc}
 SELECT r.resident_id, 
@@ -252,9 +242,6 @@ FULL OUTER JOIN intakes AS i
 **What this query does:**
 
 This returns everything—residents without intakes, intakes without residents, and all matched pairs. In our database, all of our intake records are matched to residents, so no nulls were returned.
-
-![](images/outer_join.png)
-
 
 ## Recap: Visualizing joins
 
@@ -281,9 +268,6 @@ LEFT JOIN counties AS c
 
 **What this query does:**
 It joins the `intakes` table with the `counties` reference table using `county_id` and replaces the ID with a more digestible county name.
-
-
-![](images/ref_join.png)
 
 In a corrections environment, this helps communicate data findings more clearly—especially when sharing dashboards or reports with stakeholders who may not recognize internal ID numbers.
 
@@ -312,10 +296,6 @@ INNER JOIN facilities AS f
 **What this query does:**
 
 It combines three tables to show which residents were admitted to which facilities and when.
-
-![](images/chain_join.png)
-
-
 
 ## Key takeaways
 
