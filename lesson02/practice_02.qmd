@@ -1,5 +1,5 @@
 ---
-title: "Lesson 2: Querying and Filtering Data"
+title: "Lesson 2 Exercise"
 engine: knitr
 filters:
   - interactive-sql
@@ -8,74 +8,13 @@ databases:
     path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
 ---
 
-
-## Learning Check
-
-1. Which of the following are valid SQL comparison operators? *(Select all that apply)*
-
-a. `=`
-b. `==`
-c. `!=`
-d. `<>`
-e. `NOT =`
-
-***Correct Answers: A, C, D***
-
-2. Match each SQL keyword or operator to its function:
-
-
-| **SQL Keyword/Operator** | **Function** | 
-|---------|:-----|
-| ORDER BY      | A. Filters records based on conditions   |
-| WHERE     | B. Ensures *all* conditions are true  |
-| IS NULL       | C. Returns results if *any* condition is true     |
-| AND       | D. Sorts results in a specified order    |
-| OR       | E. Selects rows with missing values    |
-
-
-
-  ***Correct Answers: ***
-    
-| **SQL Keyword/Operator** | **Function** | 
-|---------|:-----|
-| ORDER BY      | D. Sorts results in a specified order  |
-| WHERE     | A. Filters records based on conditions  |
-| IS NULL       | E. Selects rows with missing values      |
-| AND       | B. Ensures *all* conditions are true     |
-| OR       | C. Returns results if *any* condition is true   |
-
-
-3. The `IS NULL` operator returns true when the column contains a value. *(TRUE/FALSE)*
-
-***Correct Answer: False***. `IS NULL` is true only when the column contains no value (i.e., is null).
-    
-    
-4. What does the following query do?
-
-```{.sql .interactive .state_doc}
-SELECT * 
-FROM residents
-WHERE sex = 'F' AND race = 'Black';
-```
-
-a. Returns all female residents regardless of race
-b. Returns all Black residents regardless of sex
-c. Returns only residents who are Black and female
-d. Returns all residents who are not Black or not female
-
-***Correct Answer: C***
-
-
-## Exercise
+1. You’ve been asked to generate a list of residents whose primary language is not English. Write a query to retrieve their first name, last name, and primary language from the residents table. Sort the results alphabetically by last name. You can refer to the ERD above to review table structure and column names.
 
 ![](images/corrections_erd.png)
 
-1. You’ve been asked to generate a list of residents whose primary language is not English. Write a query to retrieve their first name, last name, and primary language from the residents table. Sort the results alphabetically by last name. You can refer to the ERD above to review table structure and column names.
-
 ```{.sql .interactive .state_doc}
 
 ```
-
 
 <details>
 <summary>Show the answer</summary>
@@ -88,9 +27,7 @@ FROM residents
 WHERE primary_language != 'English'
 ORDER BY last_name;
 ```
-
-
-##
+</details>
 
 2. A program manager wants to better understand the age at which residents had their first arrest. Generate a report that includes each resident’s ID, first name, last name, and age at first arrest. Sort the results in descending order so the oldest age appears first.
 
@@ -111,5 +48,5 @@ SELECT resident_id,
 FROM residents
 ORDER BY age_at_first_arrest DESC;
 ```
-
+</details>
 
