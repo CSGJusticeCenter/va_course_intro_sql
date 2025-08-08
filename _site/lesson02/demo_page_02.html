@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson 1: Introduction to SQL</title>
+<title>Lesson 2: Filtering and Sorting Data with SQL</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,36 +85,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
-  <ul class="collapse">
-  <li><a href="#what-is-sql" id="toc-what-is-sql" class="nav-link" data-scroll-target="#what-is-sql">What is SQL?</a></li>
-  </ul></li>
-  <li><a href="#why-sql-matters-for-corrections-analysts" id="toc-why-sql-matters-for-corrections-analysts" class="nav-link" data-scroll-target="#why-sql-matters-for-corrections-analysts">Why SQL Matters for Corrections Analysts</a></li>
-  <li><a href="#understanding-relational-databases" id="toc-understanding-relational-databases" class="nav-link" data-scroll-target="#understanding-relational-databases">Understanding Relational Databases</a>
-  <ul class="collapse">
-  <li><a href="#key-components-of-a-relational-database" id="toc-key-components-of-a-relational-database" class="nav-link" data-scroll-target="#key-components-of-a-relational-database">Key Components of a Relational Database</a></li>
-  <li><a href="#example-corrections-data-stored-in-a-relational-database" id="toc-example-corrections-data-stored-in-a-relational-database" class="nav-link" data-scroll-target="#example-corrections-data-stored-in-a-relational-database">Example: Corrections Data Stored in a Relational Database</a></li>
-  </ul></li>
-  <li><a href="#writing-your-first-sql-query" id="toc-writing-your-first-sql-query" class="nav-link" data-scroll-target="#writing-your-first-sql-query">Writing Your First SQL Query</a>
-  <ul class="collapse">
-  <li><a href="#basic-syntax" id="toc-basic-syntax" class="nav-link" data-scroll-target="#basic-syntax">Basic Syntax</a></li>
-  <li><a href="#selecting-specific-columns" id="toc-selecting-specific-columns" class="nav-link" data-scroll-target="#selecting-specific-columns">Selecting Specific Columns</a></li>
-  </ul></li>
-  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
-  </ul>
-</nav>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+  
 </div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lesson 1: Introduction to SQL</h1>
+<h1 class="title">Lesson 2: Filtering and Sorting Data with SQL</h1>
 </div>
 
 
@@ -131,104 +109,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Structured Query Language (SQL) is a powerful tool for managing and analyzing data stored in relational databases. As a corrections analyst, you likely work with large datasets containing information about individuals, facilities, incidents, and case processing. SQL allows you to efficiently retrieve, filter, and analyze this data, making it an essential skill for data-driven decision-making in the corrections field.</p>
-<p>This lesson will introduce SQL, explain how relational databases are structured, and guide you through writing your first SQL queries.</p>
-<section id="what-is-sql" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-sql">What is SQL?</h3>
-<p>SQL (pronounced “sequel” or “S-Q-L”) is the standard programming language used for interacting with relational databases. Unlike general-purpose programming languages like Python or R, SQL is specifically designed for managing structured data. It allows you to:</p>
-<ul>
-<li>Retrieve data from a database</li>
-<li>Filter and sort records based on specific criteria</li>
-<li>Combine data from multiple tables</li>
-<li>Perform calculations and generate summary statistics</li>
-<li>Modify and update records in a dataset</li>
-</ul>
-<p>SQL is widely used in government agencies, law enforcement, corrections departments, and research institutions because it provides a reliable and efficient way to store and analyze data.</p>
-</section>
-</section>
-<section id="why-sql-matters-for-corrections-analysts" class="level2">
-<h2 class="anchored" data-anchor-id="why-sql-matters-for-corrections-analysts">Why SQL Matters for Corrections Analysts</h2>
-<p>As a corrections analyst, you work with large datasets that track case records, time computation, facility populations, and supervision trends. These datasets are often stored in <strong>relational databases</strong>, which are structured collections of data organized into tables.</p>
-<p>Rather than manually sorting through spreadsheets, SQL allows you to quickly answer questions like:</p>
-<ul>
-<li>How many individuals were admitted to a correctional facility in the past six months?</li>
-<li>What is the average length of stay for individuals released in a given year?</li>
-<li>How many pending cases are there in a particular jurisdiction?</li>
-</ul>
-<p>By mastering SQL, you can retrieve insights more efficiently, ensuring that your reports and analyses are accurate and reproducible.</p>
-</section>
-<section id="understanding-relational-databases" class="level2">
-<h2 class="anchored" data-anchor-id="understanding-relational-databases">Understanding Relational Databases</h2>
-<p>A <strong>relational database</strong> is a collection of tables that store related data. Each table consists of <strong>rows</strong> (records) and <strong>columns</strong> (fields). A table can be thought of like a spreadsheet, where each row represents an individual record, and each column represents a specific attribute of that record.</p>
-<section id="key-components-of-a-relational-database" class="level3">
-<h3 class="anchored" data-anchor-id="key-components-of-a-relational-database">Key Components of a Relational Database</h3>
-<ul>
-<li><strong>Tables</strong> – The fundamental building blocks of a database. Each table stores a specific type of data (e.g., inmate records, facility details, time computation data).</li>
-<li><strong>Columns (Fields)</strong> – Each column in a table represents a specific type of information, such as name, date of birth, sentence length, or housing assignment.</li>
-<li><strong>Rows (Records)</strong> – Each row represents an individual entry in a table, such as a specific inmate’s record or a particular facility.</li>
-<li><strong>Primary Keys</strong> – A unique identifier for each record in a table (e.g., an inmate ID or case number).</li>
-<li><strong>Foreign Keys</strong> – A column that creates a link between two tables by referencing the primary key of another table.</li>
-</ul>
-</section>
-<section id="example-corrections-data-stored-in-a-relational-database" class="level3">
-<h3 class="anchored" data-anchor-id="example-corrections-data-stored-in-a-relational-database">Example: Corrections Data Stored in a Relational Database</h3>
-<p>Consider a simple database that tracks facility populations. It might include tables like these:</p>
-<p>In this example:</p>
-<ul>
-<li>The <strong>Individuals Table</strong> records basic details about individuals, including their assigned facility.</li>
-<li>The <strong>Facilities Table</strong> stores information about each facility.</li>
-<li>The <strong>Facility_ID</strong> in the Individuals Table is a <strong>foreign key</strong> that links each person to a facility in the Facilities Table.</li>
-</ul>
-<p>This structure allows SQL queries to pull insights from multiple tables efficiently.</p>
-</section>
-</section>
-<section id="writing-your-first-sql-query" class="level2">
-<h2 class="anchored" data-anchor-id="writing-your-first-sql-query">Writing Your First SQL Query</h2>
-<p>Now that you understand the basics of relational databases, let’s write a simple SQL query.</p>
-<p>The most fundamental SQL command is <code>SELECT</code>, which retrieves data from a table.</p>
-<section id="basic-syntax" class="level3">
-<h3 class="anchored" data-anchor-id="basic-syntax">Basic Syntax</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> column1, column2, <span class="op">..</span>.</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> table_name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>To retrieve all columns from a table, you can use <code>*</code>:</p>
 <div class="interactive-sql">
-<div class="sourceCode" id="cb2"><pre class="sourceCode sql interactive state_doc code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> person;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql interactive state_doc code-with-copy"><code class="sourceCode sql"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This query returns all records from the <strong>Individuals Table</strong>, displaying every column.</p>
-</section>
-<section id="selecting-specific-columns" class="level3">
-<h3 class="anchored" data-anchor-id="selecting-specific-columns">Selecting Specific Columns</h3>
-<p>If you only need certain columns, specify them by name:</p>
-<div class="interactive-sql">
-<div class="sourceCode" id="cb3"><pre class="sourceCode sql interactive state_doc code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> person_id, last_name, dob</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> person;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="key-takeaways" class="level2">
-<h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
-<ul>
-<li><strong>SQL is the standard language for interacting with relational databases.</strong> It allows analysts to efficiently retrieve and analyze data.</li>
-<li><strong>Relational databases store data in tables, which are structured collections of rows and columns.</strong></li>
-<li><strong>A <code>SELECT</code> statement retrieves data from a table.</strong> You can choose specific columns to display using <code>SELECT column_name</code>.</li>
-<li><strong>Understanding SQL is essential for corrections analysts</strong> because it enables efficient reporting, case tracking, and population analysis.</li>
-</ul>
-<p>This lesson provides a foundation for SQL querying. In the next lesson, you’ll learn how to refine queries further by applying filtering techniques with <code>WHERE</code>, <code>AND</code>, <code>OR</code>, and <code>NOT</code>.</p>
-</section>
-<section id="additional-resources" class="level2">
-<h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
-<ul>
-<li>W3Schools.com (Website with more in-depth SQL learning and practice)</li>
-<li>MySQL Cookbook, Fourth Edition</li>
-</ul>
 <sqlime-db name="state_doc" path="https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"></sqlime-db>
 <sqlime-examples db="state_doc" selector="div.interactive-sql pre.state_doc code" editable=""></sqlime-examples>
-</section>
 
 </main>
 <!-- /main column -->

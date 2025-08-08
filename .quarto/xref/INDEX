@@ -6,5 +6,59 @@
   "index.qmd": {
     "index.html": "15aec69c",
     "index.docx": "f4aeb22b"
+  },
+  "lesson02/lesson02.qmd": {
+    "lesson02.html": "b59c391a"
+  },
+  "lesson03/lesson03.qmd": {
+    "lesson03.html": "44645268"
+  },
+  "lesson04/lesson04.qmd": {
+    "lesson04.html": "7a93586e"
+  },
+  "lesson05/lesson05.qmd": {
+    "lesson05.html": "68f6e89a"
+  },
+  "lesson01/demo_page_01.qmd": {
+    "demo_page_01.html": "af8bd55e"
+  },
+  "lesson01/practice01.qmd": {
+    "practice01.html": "569c22bf"
+  },
+  "lesson02/demo_page_02.qmd": {
+    "demo_page_02.html": "99eae279"
+  },
+  "lesson02/practice_02.qmd": {
+    "practice_02.html": "ad00c091"
+  },
+  "lesson03/practice_03.qmd": {
+    "practice_03.html": "37a7e67a"
+  },
+  "lesson02/demo_example_02.qmd": {
+    "demo_example_02.html": "885383d5"
+  },
+  "lesson03/demo_example_03.qmd": {
+    "demo_example_03.html": "f9434984"
+  },
+  "lesson03/demo_page_03.qmd": {
+    "demo_page_03.html": "3280bf66"
+  },
+  "lesson04/demo_example_04.qmd": {
+    "demo_example_04.html": "70bcc127"
+  },
+  "lesson04/demo_page_04.qmd": {
+    "demo_page_04.html": "cde2d71b"
+  },
+  "lesson04/practice_04.qmd": {
+    "practice_04.html": "8097edc8"
+  },
+  "lesson05/demo_example_05.qmd": {
+    "demo_example_05.html": "9d77882f"
+  },
+  "lesson05/demo_page_05.qmd": {
+    "demo_page_05.html": "6b2864b5"
+  },
+  "lesson05/practice_05.qmd": {
+    "practice_05.html": "3fd8ec4a"
   }
 }
