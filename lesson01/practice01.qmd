@@ -8,48 +8,6 @@ databases:
     path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
 ---
 
-
-## Learning Check
-
-
-1. What does SQL stand for?
-
-    a. Simple Query Language
-    b. Structured Query Language
-    c. System Quality Logic
-    d. Standard Query Layout
-
-    ***Correct Answer: B***
-
-2. What is SQL usually used for?
-*(Select all that apply)*
-    a. Creating and managing databases
-    b. Writing code for mobile apps
-    c. Querying and analyzing data
-    d. Connecting relational database tables
-    
-    ***Correct answers: A, C, D***
-
-3. In a relational database, data is typically organized into one large table to make querying faster. *(TRUE/FALSE)*
-
-    ***Correct Answer: False***. Relational databases use multiple related tables to store data efficiently and minimize duplication.
-
-4. In a relational database, a foreign key is a unique identifier for each row in a table. *(TRUE/FALSE)*
-
-    ***Correct answer: False***. A primary key is a unique identifier for each row. A foreign key is a reference to a primary key in another table, used to link tables together.
-
-5. What SQL keyword is used to retrieve data from a table? 
-
-    a. GET
-    b. FETCH
-    c. SELECT
-    d. OUTPUT
-
-    ***Correct answer: C***
-
-
-
-
 ## Exercise
 
 1. Using the ERD provided in this course, identify the primary key and foreign key(s) in the following tables:
