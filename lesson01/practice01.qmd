@@ -1,5 +1,5 @@
 ---
-title: "Lesson 1: Intro to SQL"
+title: "Lesson 1 Exercise"
 engine: knitr
 toc: false
 filters:
@@ -8,8 +8,6 @@ databases:
   - name: state_doc
     path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
 ---
-
-## Exercise
 
 1. Using the ERD provided in this course, identify the primary key and foreign key(s) in the following tables:
 - `residents`
@@ -32,9 +30,7 @@ databases:
   - `facil_id` (which references facilities)
   - `county_id` (which references counties)
 
-
-
-## 
+</details>
 
 2. Write a query to retrieve all resident ids and their age at first arrest.
 
@@ -53,6 +49,7 @@ SELECT resident_id,
 FROM residents;
 ```
 
+</details>
 
 
 
