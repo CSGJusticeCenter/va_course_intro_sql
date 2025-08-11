@@ -1,5 +1,5 @@
 ---
-title: "Lesson 3: Aggregating Data"
+title: "Lesson 3 Exercise"
 engine: knitr
 filters:
   - interactive-sql
@@ -8,60 +8,6 @@ databases:
     path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
 ---
 
-
-## Learning Check
-
-1. Which SQL clause is used to group rows that have the same values into summary rows?
-
-    a. ORDER BY
-    b. GROUP BY
-    c. HAVING
-    d. WHERE
-    
-    ***Correct Answer: B***
-
-
-2. The `HAVING` clause is used to filter groups of rows after they’ve been grouped using `GROUP BY`.  *(TRUE/FALSE)*
-
-
-    ***Correct Answer: True***. `HAVING` is used to filter aggregated results, whereas `WHERE` filters rows before aggregation.
-
-
-3. What is the purpose of assigning a column an alias (e.g., AS `total_residents`) when writing a query with aggregate functions?
-
-    a. To rename a table
-    b. To create a new column in the database
-    c. To make query results more readable
-    d. To join two tables
-
-    ***Correct Answer: C***
-
-
-4.Match each SQL keyword or operator to its function:
-
-| **SQL Keyword/Operator** | **Function** | 
-|---------|:-----|
-| COUNT()      | A. Calculates the mean value   |
-| SUM()     | B. Returns the number of rows   |
-| AVG()      | C. Adds up numeric values    |
-
-
-
-***Correct Answers: ***
-
-| **SQL Keyword/Operator** | **Function** | 
-|---------|:-----|
-| COUNT()      | B. Returns the number of rows    |
-| SUM()     | C. Adds up numeric values   |
-| AVG()      | A. Calculates the mean value     |
-
-
-
-
-
-
-## Exercise
-
 ![](images/corrections_erd.png)
 
 1. A researcher is analyzing sentence trends across offense categories. Write a query that returns the average sentence length (in months) by offense group. Include the offense group name and the number of residents in each group. Round the average sentence length to one decimal place. You can refer to the ERD above to review table structure and column names.
@@ -69,8 +15,6 @@ databases:
 ```{.sql .interactive .state_doc}
 
 ```
-
-
 
 <details>
 <summary>Show the answer</summary>
@@ -82,17 +26,13 @@ SELECT off_group,
 FROM intakes AS i
 GROUP BY off_group;
 ```
-
-
-##
+</details>
 
 2. Department leadership is working to reduce housing costs across all facilities and wants to identify facilities housing fewer than 100 residents. Write a query that retrieves each facility’s name and the number of residents housed there. Only include facilities with fewer than 250 residents. You can refer to the ERD above to review table structure and column names.
 
 ```{.sql .interactive .state_doc}
 
 ```
-
-
 
 <details>
 <summary>Show the answer</summary>
@@ -102,3 +42,4 @@ FROM intakes
 GROUP BY facil_id
 HAVING COUNT(*) < 250;
 ```
+</details>

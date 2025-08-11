@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson 4: Working with Multiple Tables</title>
+<title>Lesson 4 Exercise</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,22 +85,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#learning-check" id="toc-learning-check" class="nav-link active" data-scroll-target="#learning-check">Learning Check</a></li>
-  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise">Exercise</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
-  </ul>
-</nav>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+  
 </div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lesson 4: Working with Multiple Tables</h1>
+<h1 class="title">Lesson 4 Exercise</h1>
 </div>
 
 
@@ -117,85 +109,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="learning-check" class="level2">
-<h2 class="anchored" data-anchor-id="learning-check">Learning Check</h2>
-<ol type="1">
-<li><p>What is the purpose of a <code>JOIN</code> statememt in SQL?</p>
-<ol type="a">
-<li>To filter data from a single table</li>
-<li>To combine rows from two or more tables based on a related column</li>
-<li>To calculate aggregates like SUM and AVG</li>
-<li>To sort query results alphabetically</li>
-</ol>
-<p><strong><em>Correct Answer: B</em></strong></p></li>
-<li><p>A <code>LEFT JOIN</code> returns all records from the left table and only matching records from the right table. <em>(TRUE/FALSE)</em></p>
-<p><strong><em>Correct Answer: TRUE </em></strong></p></li>
-<li><p>Which of the following are reasons to use table aliases in SQL joins? (Select all that apply)</p>
-<ol type="a">
-<li>To make queries easier to read</li>
-<li>To avoid typing full table names repeatedly</li>
-<li>To speed up query execution</li>
-<li>To comply with SQL syntax rules</li>
-</ol>
-<p><strong><em>Correct Answers: A, B </em></strong></p></li>
-<li><p>Match the type of JOIN to what it returns.</p></li>
-</ol>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 60%">
-<col style="width: 40%">
-</colgroup>
-<thead>
-<tr class="header">
-<th><strong>JOIN Type</strong></th>
-<th style="text-align: left;"><strong>Result</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>INNER JOIN</td>
-<td style="text-align: left;">A. All records from both tables, with NULLs where there’s no match</td>
-</tr>
-<tr class="even">
-<td>LEFT JOIN</td>
-<td style="text-align: left;">B. Only matching records in both tables</td>
-</tr>
-<tr class="odd">
-<td>FULL OUTER JOIN</td>
-<td style="text-align: left;">C. All records from the left table and matched records from the right</td>
-</tr>
-</tbody>
-</table>
-<p><strong><em>Correct Answer: </em></strong></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 60%">
-<col style="width: 40%">
-</colgroup>
-<thead>
-<tr class="header">
-<th><strong>JOIN Type</strong></th>
-<th style="text-align: left;"><strong>Result</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>INNER JOIN</td>
-<td style="text-align: left;">B. Only matching records in both tables</td>
-</tr>
-<tr class="even">
-<td>LEFT JOIN</td>
-<td style="text-align: left;">C. All records from the left table and matched records from the right</td>
-</tr>
-<tr class="odd">
-<td>FULL OUTER JOIN</td>
-<td style="text-align: left;">A. All records from both tables, with NULLs where there’s no match</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="exercise" class="level2">
-<h2 class="anchored" data-anchor-id="exercise">Exercise</h2>
 <p><img src="images/corrections_erd.png" class="img-fluid"></p>
 <ol type="1">
 <li>You’ve been asked to generate a report listing all residents who are currently missing an expected release date. Your query should include the resident ID, first and last name, facility name, and admission date. Sort the results so the earliest admission appears first. You can refer to the ERD above to review table structure and column names.</li>
@@ -225,9 +138,7 @@ Show the answer
 <li><p>The goal is to list all residents with missing <code>exp_release_date</code> values, and we need to match residents with their intakes.</p></li>
 <li><p>A <code>LEFT JOIN</code> ensures that every resident is included, even if there’s no matching intake.</p></li>
 </ul>
-</details></section>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section"></h2>
+</details>
 <ol start="2" type="1">
 <li>A facility administrator wants to understand where residents admitted to the Western State Correctional Facility are coming from. Write a query to show the number of residents admitted from each county. Sort the results in order from highest to lowest admissions. You can refer to the ERD above to review table structure and column names.</li>
 </ol>
@@ -254,9 +165,9 @@ Show the answer
 <li><p>This query focuses on counting admissions <strong>where we have a matching county and facility</strong>.</p></li>
 <li><p>We’re interested only in records that are <strong>fully matched across</strong> <code>intakes</code>, <code>facilities</code>, and <code>counties</code>, so <code>INNER JOIN</code> is appropriate.</p></li>
 </ul>
+</details>
 <sqlime-db name="state_doc" path="https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"></sqlime-db>
 <sqlime-examples db="state_doc" selector="div.interactive-sql pre.state_doc code" editable=""></sqlime-examples>
-</details></section>
 
 </main>
 <!-- /main column -->

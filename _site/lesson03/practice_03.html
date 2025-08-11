@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson 3: Aggregating Data</title>
+<title>Lesson 3 Exercise</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,22 +85,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#learning-check" id="toc-learning-check" class="nav-link active" data-scroll-target="#learning-check">Learning Check</a></li>
-  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise">Exercise</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
-  </ul>
-</nav>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+  
 </div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lesson 3: Aggregating Data</h1>
+<h1 class="title">Lesson 3 Exercise</h1>
 </div>
 
 
@@ -117,77 +109,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="learning-check" class="level2">
-<h2 class="anchored" data-anchor-id="learning-check">Learning Check</h2>
-<ol type="1">
-<li><p>Which SQL clause is used to group rows that have the same values into summary rows?</p>
-<ol type="a">
-<li>ORDER BY</li>
-<li>GROUP BY</li>
-<li>HAVING</li>
-<li>WHERE</li>
-</ol>
-<p><strong><em>Correct Answer: B</em></strong></p></li>
-<li><p>The <code>HAVING</code> clause is used to filter groups of rows after they’ve been grouped using <code>GROUP BY</code>. <em>(TRUE/FALSE)</em></p>
-<p><strong><em>Correct Answer: True</em></strong>. <code>HAVING</code> is used to filter aggregated results, whereas <code>WHERE</code> filters rows before aggregation.</p></li>
-<li><p>What is the purpose of assigning a column an alias (e.g., AS <code>total_residents</code>) when writing a query with aggregate functions?</p>
-<ol type="a">
-<li>To rename a table</li>
-<li>To create a new column in the database</li>
-<li>To make query results more readable</li>
-<li>To join two tables</li>
-</ol>
-<p><strong><em>Correct Answer: C</em></strong></p></li>
-</ol>
-<p>4.Match each SQL keyword or operator to its function:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th><strong>SQL Keyword/Operator</strong></th>
-<th style="text-align: left;"><strong>Function</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>COUNT()</td>
-<td style="text-align: left;">A. Calculates the mean value</td>
-</tr>
-<tr class="even">
-<td>SUM()</td>
-<td style="text-align: left;">B. Returns the number of rows</td>
-</tr>
-<tr class="odd">
-<td>AVG()</td>
-<td style="text-align: left;">C. Adds up numeric values</td>
-</tr>
-</tbody>
-</table>
-<p><strong><em>Correct Answers: </em></strong></p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th><strong>SQL Keyword/Operator</strong></th>
-<th style="text-align: left;"><strong>Function</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>COUNT()</td>
-<td style="text-align: left;">B. Returns the number of rows</td>
-</tr>
-<tr class="even">
-<td>SUM()</td>
-<td style="text-align: left;">C. Adds up numeric values</td>
-</tr>
-<tr class="odd">
-<td>AVG()</td>
-<td style="text-align: left;">A. Calculates the mean value</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="exercise" class="level2">
-<h2 class="anchored" data-anchor-id="exercise">Exercise</h2>
 <p><img src="images/corrections_erd.png" class="img-fluid"></p>
 <ol type="1">
 <li>A researcher is analyzing sentence trends across offense categories. Write a query that returns the average sentence length (in months) by offense group. Include the offense group name and the number of residents in each group. Round the average sentence length to one decimal place. You can refer to the ERD above to review table structure and column names.</li>
@@ -206,9 +127,7 @@ Show the answer
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> intakes <span class="kw">AS</span> i</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> off_group;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</details></section>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section"></h2>
+</details>
 <ol start="2" type="1">
 <li>Department leadership is working to reduce housing costs across all facilities and wants to identify facilities housing fewer than 100 residents. Write a query that retrieves each facility’s name and the number of residents housed there. Only include facilities with fewer than 250 residents. You can refer to the ERD above to review table structure and column names.</li>
 </ol>
@@ -225,9 +144,9 @@ Show the answer
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> facil_id</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&lt;</span> <span class="dv">250</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</details>
 <sqlime-db name="state_doc" path="https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"></sqlime-db>
 <sqlime-examples db="state_doc" selector="div.interactive-sql pre.state_doc code" editable=""></sqlime-examples>
-</details></section>
 
 </main>
 <!-- /main column -->

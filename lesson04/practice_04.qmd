@@ -1,5 +1,5 @@
 ---
-title: "Lesson 4: Working with Multiple Tables"
+title: "Lesson 4 Exercise"
 engine: knitr
 filters:
   - interactive-sql
@@ -9,68 +9,13 @@ databases:
 ---
 
 
-## Learning Check
-
-1. What is the purpose of a `JOIN` statememt in SQL?
-
-    a. To filter data from a single table
-    b. To combine rows from two or more tables based on a related column
-    c. To calculate aggregates like SUM and AVG
-    d. To sort query results alphabetically
-    
-    
-    ***Correct Answer: B***
-
-
-2. A `LEFT JOIN` returns all records from the left table and only matching records from the right table. *(TRUE/FALSE)*
-
-    ***Correct Answer: TRUE ***
-
-
-3. Which of the following are reasons to use table aliases in SQL joins? (Select all that apply)
-
-    a. To make queries easier to read
-    b. To avoid typing full table names repeatedly
-    c. To speed up query execution
-    d. To comply with SQL syntax rules
-    
-    ***Correct Answers: A, B ***
-
-
-4. Match the type of JOIN to what it returns.
-
-| **JOIN Type** | **Result** | 
-|---------|:-----|
-| INNER JOIN      | A. All records from both tables, with NULLs where there’s no match   |
-| LEFT JOIN     | B. Only matching records in both tables |
-| FULL OUTER JOIN      |  C. All records from the left table and matched records from the right     |
-
-***Correct Answer: ***
-
-| **JOIN Type** | **Result** | 
-|---------|:-----|
-| INNER JOIN      | B. Only matching records in both tables   |
-| LEFT JOIN     | C. All records from the left table and matched records from the right  |
-| FULL OUTER JOIN      | A. All records from both tables, with NULLs where there’s no match       |
-
-
-
-
-
-
-## Exercise
-
 ![](images/corrections_erd.png)
 
 1. You’ve been asked to generate a report listing all residents who are currently missing an expected release date. Your query should include the resident ID, first and last name, facility name, and admission date. Sort the results so the earliest admission appears first. You can refer to the ERD above to review table structure and column names.
 
-
-
 ```{.sql .interactive .state_doc}
 
 ```
-
-
 
 <details>
 <summary>Show the answer</summary>
@@ -94,7 +39,7 @@ ORDER BY i.admission_date;
 
 - A `LEFT JOIN` ensures that every resident is included, even if there's no matching intake.
 
-##
+</details>
 
 2. A facility administrator wants to understand where residents admitted to the Western State Correctional Facility are coming from. Write a query to show the number of residents admitted from each county. Sort the results in order from highest to lowest admissions. You can refer to the ERD above to review table structure and column names.
 

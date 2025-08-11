@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lesson 5: Applying SQL to Corrections Data</title>
+<title>Lesson 5 Exercise</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -82,25 +82,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="quarto-light">
+<body class="fullcontent quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#learning-check" id="toc-learning-check" class="nav-link active" data-scroll-target="#learning-check">Learning Check</a></li>
-  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise">Exercise</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
-  </ul>
-</nav>
-</div>
+
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lesson 5: Applying SQL to Corrections Data</h1>
+<h1 class="title">Lesson 5 Exercise</h1>
 </div>
 
 
@@ -117,40 +107,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="learning-check" class="level2">
-<h2 class="anchored" data-anchor-id="learning-check">Learning Check</h2>
-<ol type="1">
-<li><p>The <code>ROUND()</code> function in SQL is used to improve query performance. <em>(TRUE/FALSE)</em></p>
-<p><strong><em>Correct Answer: False</em></strong> <code>ROUND()</code> is used to format numeric results by limiting decimal places—it does not impact the performance of the query.</p></li>
-<li><p>Which of the following SQL expressions correctly calculates the number of days between a resident’s admission date and expected release date?</p>
-<ol type="a">
-<li>DATEDIFF(admission_date, exp_release_date)</li>
-<li>JULIANDAY(exp_release_date) - JULIANDAY(admission_date)</li>
-<li>DATEDIFF(DAY, exp_release_date, admission_date)</li>
-<li>exp_release_date - admission_date</li>
-</ol>
-<p><strong><em>Correct Answer: B</em></strong></p></li>
-<li><p>Which of the following are best practices for writing SQL queries?</p>
-<ol type="a">
-<li>Always use SELECT * to ensure you get all the data</li>
-<li>Use comments to explain complex logic</li>
-<li>Write queries with formatting that aligns columns</li>
-<li>Use meaningful table and column aliases</li>
-</ol>
-<p><strong><em>Correct Answer: B, C, D</em></strong></p></li>
-</ol>
-</section>
-<section id="exercise" class="level2">
-<h2 class="anchored" data-anchor-id="exercise">Exercise</h2>
+<section id="the-case-of-the-lost-intake-report" class="level2">
+<h2 class="anchored" data-anchor-id="the-case-of-the-lost-intake-report">The case of the lost intake report</h2>
 <p><img src="images/corrections_erd.png" class="img-fluid"></p>
-<ol type="1">
-<li>The case of the lost intake report</li>
-</ol>
 <p>The Data and Research Unit was preparing a quarterly intake report for department leadership. The SQL query had been carefully written, tested, and saved along with well-organized summary notes describing each part of the query. Unfortunately, during a system migration, the SQL code was lost.</p>
 <p>Thankfully, the summary notes were stored in a separate documentation system and remain intact. With a deadline fast approaching, a team member has been assigned to reconstruct the original query using only these summary notes.</p>
 <p>Your task is to write the SQL query based on the recovered documentation below. Once completed, the output will help identify how many individuals were admitted in the last 6 months, grouped by facility and intake month. You can refer to the ERD above to review table structure and column names.</p>
-<div class="interactive-sql">
-<div class="sourceCode" id="cb1"><pre class="sourceCode sql interactive state_doc code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">This query calculates the number of individuals admitted to each facility in the last 6 months.</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">COUNT is used to total the number of admission_date entries.</span></span>
@@ -163,7 +126,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">The query only includes records where the admission_date is within the past 183 days (6 months) from the current date, using the JULIANDAY() function.</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <p>Write your SQL query below:</p>
 <div class="interactive-sql">
 <div class="sourceCode" id="cb2"><pre class="sourceCode sql interactive state_doc code-with-copy"><code class="sourceCode sql"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -187,12 +149,10 @@ Show the answer
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    i.admission_date,</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    f.facil_name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</details></section>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section"></h2>
-<ol start="2" type="1">
-<li>The Debugging Dilemma</li>
-</ol>
+</details>
+</section>
+<section id="the-debugging-dilemma" class="level2">
+<h2 class="anchored" data-anchor-id="the-debugging-dilemma">The Debugging Dilemma</h2>
 <p>A team member was tasked with writing a query for the “Admissions by County” report, which shows the number of individuals admitted over the past year, grouped by county name. They attempted to write the code but keep running into an error when they try to execute it.</p>
 <p>After multiple failed attempts to fix it themselves, they’ve asked you to review the code for quality assurance. Your job is to identify and correct any errors so the query runs properly and returns the expected results. You can refer to the ERD above to reviewtable structure and column names.</p>
 <p><strong><em>Goals of the query:</em></strong></p>
@@ -249,9 +209,10 @@ Show the answer
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> </span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    County;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</details>
 <sqlime-db name="state_doc" path="https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"></sqlime-db>
 <sqlime-examples db="state_doc" selector="div.interactive-sql pre.state_doc code" editable=""></sqlime-examples>
-</details></section>
+</section>
 
 </main>
 <!-- /main column -->

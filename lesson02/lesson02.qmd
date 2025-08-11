@@ -1,5 +1,5 @@
 ---
-title: "Lesson 2: Filtering and Sorting Data with SQL"
+title: "Lesson 2: Filtering and Sorting Data"
 engine: knitr
 filters:
   - interactive-sql
