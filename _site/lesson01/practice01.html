@@ -107,14 +107,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p><img src="images/corrections_erd.png" class="img-fluid"></p>
 <ol type="1">
-<li>Using the ERD provided in this course, identify the primary key and foreign key(s) in the following tables:</li>
+<li>Using the ERD above, identify the primary key and foreign key(s) in the following tables:</li>
 </ol>
 <ul>
 <li><code>residents</code></li>
 <li><code>intakes</code></li>
 </ul>
-<p><img src="images/corrections_erd.png" class="img-fluid"></p>
+<div class="interactive-sql">
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql interactive state_doc code-with-copy"><code class="sourceCode sql"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <details>
 <summary>
 Show the answer
@@ -138,7 +141,7 @@ Show the answer
 <li>Write a query to retrieve all resident ids and their age at first arrest.</li>
 </ol>
 <div class="interactive-sql">
-<div class="sourceCode" id="cb1"><pre class="sourceCode sql interactive state_doc code-with-copy"><code class="sourceCode sql"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql interactive state_doc code-with-copy"><code class="sourceCode sql"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <details>
 <summary>
@@ -146,9 +149,9 @@ Show the answer
 </summary>
 <p>Query:</p>
 <div class="interactive-sql">
-<div class="sourceCode" id="cb2"><pre class="sourceCode sql interactive state_doc code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> resident_id, </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>       age_at_first_arrest</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> residents;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql interactive state_doc code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> resident_id, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>       age_at_first_arrest</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> residents;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
 <sqlime-db name="state_doc" path="https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"></sqlime-db>

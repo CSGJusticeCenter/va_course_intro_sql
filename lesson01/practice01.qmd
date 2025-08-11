@@ -9,11 +9,15 @@ databases:
     path: "https://raw.githubusercontent.com/CSGJusticeCenter/va_data/main/courses/intro_sql/state_doc.db"  
 ---
 
-1. Using the ERD provided in this course, identify the primary key and foreign key(s) in the following tables:
+![](images/corrections_erd.png)
+
+1. Using the ERD above, identify the primary key and foreign key(s) in the following tables:
 - `residents`
 - `intakes`
 
-![](images/corrections_erd.png)
+```{.sql .interactive .state_doc}
+
+```
 
 <details>
 <summary>Show the answer</summary>
