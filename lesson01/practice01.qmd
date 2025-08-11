@@ -15,10 +15,6 @@ databases:
 - `residents`
 - `intakes`
 
-```{.sql .interactive .state_doc}
-
-```
-
 <details>
 <summary>Show the answer</summary>
 
